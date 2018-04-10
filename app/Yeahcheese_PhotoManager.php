@@ -20,5 +20,17 @@ class Yeahcheese_PhotoManager extends Ethna_AppManager
 
         return $photos;
     }
+
+    function addEventPhoto($event_id, $tmp_name){
+        $result = $this->db->query('insert into photos (event_id) values (' . $event_id . ')');
+
+        if($result){
+            $insert_id = $this->db->getOne('select max(id) from photos');
+
+            move_uploaded_file($tmp_name, '../www/upload/photos/' . $insert_id. '.jpg');
+        }
+
+        return (boolean) $result;
+    }
 }
 ?>
