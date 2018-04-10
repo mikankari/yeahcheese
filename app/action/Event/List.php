@@ -98,6 +98,13 @@ class Yeahcheese_Action_EventList extends Yeahcheese_ActionClass
      */
     public function perform()
     {
+        $user_id = 1;
+
+        $eventManager = $this->backend->getManager('event');
+        $events = $eventManager->getUserEvents($user_id);
+
+        $this->action_form->setApp('events', $events);
+
         return 'event_list';
     }
 }
