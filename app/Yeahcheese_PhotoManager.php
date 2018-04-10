@@ -15,5 +15,10 @@
  */
 class Yeahcheese_PhotoManager extends Ethna_AppManager
 {
+    function getEventPhotos($event_id){
+        $photos = $this->db->getAll('select id from photos where event_id = ' . $event_id);
+
+        return $photos;
+    }
 }
 ?>
