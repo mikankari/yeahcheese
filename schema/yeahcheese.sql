@@ -17,6 +17,5 @@ create table events (
 
 create table photos (
     id          serial  primary key,
-    event_id    int     not null,
-    filename    text    not null
+    event_id    int     not null
 );
