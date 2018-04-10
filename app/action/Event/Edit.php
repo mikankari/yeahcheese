@@ -44,6 +44,31 @@ class Yeahcheese_Form_EventEdit extends Yeahcheese_ActionForm
         *                                        // is defined in this(parent) class.
         *  ),
         */
+        'name' => [
+            'type'      =>  VAR_TYPE_STRING,
+            'name'      =>  'イベント名',
+            'required'  =>  true,
+        ],
+        'publish_at' => [
+            'type'      =>  VAR_TYPE_DATETIME,
+            'name'      =>  '公開期間の開始',
+            'required'  =>  true,
+            'regexp'    =>  '/^\d{4}(-\d{2}){2} \d{2}(:\d{2}){2}$/'
+        ],
+        'publish_end_at' => [
+            'type'      =>  VAR_TYPE_DATETIME,
+            'name'      =>  '公開期間の終了',
+            'required'  =>  true,
+            'regexp'    =>  '/^\d{4}(-\d{2}){2} \d{2}(:\d{2}){2}$/',
+            'custom'    =>  'validatePublishEndAt',
+        ],
+        'photos' => [
+            'type'      =>  [VAR_TYPE_FILE],
+            'form_type' =>  FORM_TYPE_FILE,
+            'name'      =>  '写真',
+            'max'       =>  5 * 1024,
+            'custom'    =>  'validatePhotos',
+        ]
     );
 
     /**
@@ -60,6 +85,29 @@ class Yeahcheese_Form_EventEdit extends Yeahcheese_ActionForm
         return strtoupper($value);
     }
     */
+
+    function validatePublishEndAt($name){
+        $target = 'publish_at';
+        if(strtotime($this->form_vars[$name]) < strtotime($this->form_vars[$target])){
+            $this->action_error->add($name, '{form} が ' . $this->getName($target) . 'を超えています', E_FORM_INVALIDVALUE);
+        }
+    }
+
+    function validatePhotos($name){
+        $accept_types = [
+            'image/jpeg',
+        ];
+
+        if($this->form_vars[$name][0]['error'] === UPLOAD_ERR_NO_FILE){
+            return;
+        }
+
+        foreach($this->form_vars[$name] as $photo){
+            if(!in_array($photo['type'], $accept_types, true)){
+                $this->action_error->add($name, '{form} のフォーマットは JPEG 形式ではありません', E_FORM_INVALIDVALUE);
+            }
+        }
+    }
 }
 
 /**
@@ -80,13 +128,12 @@ class Yeahcheese_Action_EventEdit extends Yeahcheese_ActionClass
      */
     public function prepare()
     {
-        /**
-        if ($this->af->validate() > 0) {
-            // forward to error view (this is sample)
-            return 'error';
+        $is_send_form = $this->action_form->get('name') !== null;
+
+        if (!$is_send_form || $is_send_form && $this->action_form->validate() > 0) {
+            return 'event_edit';
         }
-        $sample = $this->af->get('sample');
-        */
+
         return null;
     }
 
@@ -98,6 +145,15 @@ class Yeahcheese_Action_EventEdit extends Yeahcheese_ActionClass
      */
     public function perform()
     {
-        return 'event_edit';
+        $event_id = 1;
+
+        if($this->action_form->get('photo')[0]['error'] !== UPLOAD_ERR_NO_FILE){
+            foreach($this->action_form->get('photos') as $photo){
+                $photoManager = $this->backend->getManager('photo');
+                $photoManager->addEventPhoto($event_id, $photo['tmp_name']);
+            }
+        }
+
+        return 'event_show';
     }
 }
