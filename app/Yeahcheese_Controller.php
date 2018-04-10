@@ -21,7 +21,7 @@ require_once 'Yeahcheese_ActionForm.php';
 require_once 'Yeahcheese_ViewClass.php';
 require_once 'Yeahcheese_UrlHandler.php';
 
-require_once '../lib/adodb/adodb.inc.php';
+require_once BASE . '/lib/adodb/adodb.inc.php';
 
 /**
  *  Yeahcheese application Controller definition.
