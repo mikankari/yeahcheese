@@ -98,6 +98,13 @@ class Yeahcheese_Action_EventShow extends Yeahcheese_ActionClass
      */
     public function perform()
     {
+        $event_id = 1;
+
+        $photoManager = $this->backend->getManager('photo');
+        $photos = $photoManager->getEventPhotos($event_id);
+
+        $this->action_form->setApp('photos', $photos);
+
         return 'event_show';
     }
 }
