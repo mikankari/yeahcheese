@@ -44,6 +44,9 @@ class Yeahcheese_Form_EventEdit extends Yeahcheese_ActionForm
         *                                        // is defined in this(parent) class.
         *  ),
         */
+        'event_id' => [
+            'type'      =>  VAR_TYPE_INT,
+        ],
         'name' => [
             'type'      =>  VAR_TYPE_STRING,
             'name'      =>  'イベント名',
@@ -119,6 +122,10 @@ class Yeahcheese_Form_EventEdit extends Yeahcheese_ActionForm
  */
 class Yeahcheese_Action_EventEdit extends Yeahcheese_ActionClass
 {
+
+    private $user_id = null;
+    private $event_id = null;
+
     /**
      *  preprocess of event_edit Action.
      *
@@ -134,6 +141,9 @@ class Yeahcheese_Action_EventEdit extends Yeahcheese_ActionClass
             return 'event_edit';
         }
 
+        $this->user_id = 1;
+        $this->event_id = $this->action_form->get('event_id');
+
         return null;
     }
 
@@ -145,15 +155,20 @@ class Yeahcheese_Action_EventEdit extends Yeahcheese_ActionClass
      */
     public function perform()
     {
-        $event_id = 1;
+        $eventManager = $this->backend->getManager('event');
+        if(! $this->event_id){
+            $this->event_id = $eventManager->addUserEvent($this->user_id, $this->action_form->form_vars);
+        }
 
         if($this->action_form->get('photo')[0]['error'] !== UPLOAD_ERR_NO_FILE){
             foreach($this->action_form->get('photos') as $photo){
                 $photoManager = $this->backend->getManager('photo');
-                $photoManager->addEventPhoto($event_id, $photo['tmp_name']);
+                $photoManager->addEventPhoto($this->event_id, $photo['tmp_name']);
             }
         }
 
-        return 'event_show';
+        header('Location: ?action_event_show=true&event_id=' . $this->event_id);
+
+        return null;
     }
 }
