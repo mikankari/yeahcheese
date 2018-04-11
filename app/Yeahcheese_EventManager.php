@@ -21,6 +21,14 @@ class Yeahcheese_EventManager extends Ethna_AppManager
         return $events;
     }
 
+    function getEvent($eventId){
+        $event = $this->db->getRow('select * from events where id = ?', [
+            $eventId,
+        ]);
+
+        return $event;
+    }
+
     function addUserEvent($userId, $formVars){
         $result = $this->db->execute('insert into events (user_id, name, hash, publish_at, publish_end_at) values (?, ?, ?, ?, ?)', [
             $userId,
