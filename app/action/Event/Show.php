@@ -91,7 +91,7 @@ class Yeahcheese_Action_EventShow extends Yeahcheese_ActionClass
             return 'error404';
         }
 
-        $event_id = $this->action_form->get('event_id');
+        $this->event_id = $this->action_form->get('event_id');
 
         return null;
     }
@@ -104,8 +104,16 @@ class Yeahcheese_Action_EventShow extends Yeahcheese_ActionClass
      */
     public function perform()
     {
+        $eventManager = $this->backend->getManager('event');
+        $current = $eventManager->getEvent($this->event_id);
+
+        $this->action_form->setApp('event_id', $this->event_id);
+        $this->action_form->setApp('name', $current['name']);
+        $this->action_form->setApp('publish_at', $current['publish_at']);
+        $this->action_form->setApp('publish_end_at', $current['publish_end_at']);
+
         $photoManager = $this->backend->getManager('photo');
-        $photos = $photoManager->getEventPhotos($event_id);
+        $photos = $photoManager->getEventPhotos($this->event_id);
 
         $this->action_form->setApp('photos', $photos);
 
