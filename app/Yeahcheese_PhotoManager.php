@@ -6,31 +6,46 @@
  * @package Yeahcheese
  */
 
-/**
- * Yeahcheese_PhotoManager
- *
- * @author {$author}
- * @access public
- * @package Yeahcheese
- */
 class Yeahcheese_PhotoManager extends Ethna_AppManager
 {
-    function getEventPhotos($event_id){
-        $photos = $this->db->getAll('select id from photos where event_id = ' . $event_id);
+    /**
+     *  アップロードされた写真を保存するパス
+     */
+    const UPLOAD_PATH = '../www/upload/photos/';
+    const UPLOAD_URL = './upload/photos/';
 
-        return $photos;
+    /**
+     *  あるイベントに投稿されたすべての写真を取得する
+     *
+     *  @param  int     $eventId    対象とするイベントのID
+     *  @return array               写真の配列
+     */
+    public function getEventPhotos(int $eventId): array
+    {
+        return $this->db->getAll('SELECT id FROM photos WHERE event_id = ?', [
+            $eventId,
+        ]);
     }
 
-    function addEventPhoto($event_id, $tmp_name){
-        $result = $this->db->query('insert into photos (event_id) values (' . $event_id . ')');
+    /**
+     *  あるイベントに写真を追加する
+     *
+     *  @param  int     $eventId    対象とするイベントのID
+     *  @param  string  $tmp_name   サーバが一時的にアップロードしたファイルのパス
+     *  @return bool                成功したらTRUE
+     */
+    public function addEventPhoto(int $eventId, string $tmpName): bool
+    {
+        $result = $this->db->query('INSERT INTO photos (event_id) VALUES (?)', [
+            $eventId,
+        ]);
 
-        if($result){
-            $insert_id = $this->db->getOne('select max(id) from photos');
+        if ($result) {
+            $insertId = $this->db->getOne('SELECT max(id) FROM photos');
 
-            move_uploaded_file($tmp_name, '../www/upload/photos/' . $insert_id. '.jpg');
+            move_uploaded_file($tmpName, UPLOAD_PATH . $insertId. '.jpg');
         }
 
         return (boolean) $result;
     }
 }
-?>

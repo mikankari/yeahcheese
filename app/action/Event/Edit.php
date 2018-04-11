@@ -6,44 +6,21 @@
  *  @package    Yeahcheese
  */
 
-/**
- *  event_edit Form implementation.
- *
- *  @author     {$author}
- *  @access     public
- *  @package    Yeahcheese
- */
 class Yeahcheese_Form_EventEdit extends Yeahcheese_ActionForm
 {
     /**
-     *  @access protected
-     *  @var    array   form definition.
+     *  アップロードできる１つの写真あたりの最大MBサイズ
      */
-    public $form = array(
-       /*
-        *  TODO: Write form definition which this action uses.
-        *  @see http://ethna.jp/ethna-document-dev_guide-form.html
-        *
-        *  Example(You can omit all elements except for "type" one) :
-        *
-        *  'sample' => array(
-        *      // Form definition
-        *      'type'        => VAR_TYPE_INT,    // Input type
-        *      'form_type'   => FORM_TYPE_TEXT,  // Form type
-        *      'name'        => 'Sample',        // Display name
-        *
-        *      //  Validator (executes Validator by written order.)
-        *      'required'    => true,            // Required Option(true/false)
-        *      'min'         => null,            // Minimum value
-        *      'max'         => null,            // Maximum value
-        *      'regexp'      => null,            // String by Regexp
-        *
-        *      //  Filter
-        *      'filter'      => 'sample',        // Optional Input filter to convert input
-        *      'custom'      => null,            // Optional method name which
-        *                                        // is defined in this(parent) class.
-        *  ),
-        */
+    const PHOTO_MAX_SIZE = 5;
+
+    /**
+     *  アップロードできる写真のMIMEタイプ
+    */
+    const PHOTO_ACCEPT_TYPES = [
+        'image/jpeg',
+    ];
+
+    public $form = [
         'event_id' => [
             'type'      =>  VAR_TYPE_INT,
             'form_type' =>  FORM_TYPE_HIDDEN,
@@ -57,96 +34,82 @@ class Yeahcheese_Form_EventEdit extends Yeahcheese_ActionForm
             'type'      =>  VAR_TYPE_DATETIME,
             'name'      =>  '公開期間の開始',
             'required'  =>  true,
-            'regexp'    =>  '/^\d{4}(-\d{2}){2} \d{2}(:\d{2}){2}$/'
+            'regexp'    =>  '/^\d{4}(-\d{2}){2} \d{2}(:\d{2}){2}$/',
         ],
         'publish_end_at' => [
             'type'      =>  VAR_TYPE_DATETIME,
             'name'      =>  '公開期間の終了',
             'required'  =>  true,
             'regexp'    =>  '/^\d{4}(-\d{2}){2} \d{2}(:\d{2}){2}$/',
-            'custom'    =>  'validatePublishEndAt',
+            'custom'    =>  'checkPublishEndAt',
         ],
         'photos' => [
             'type'      =>  [VAR_TYPE_FILE],
             'form_type' =>  FORM_TYPE_FILE,
             'name'      =>  '写真',
-            'max'       =>  5 * 1024,
-            'custom'    =>  'validatePhotos',
-        ]
-    );
+            'required'  =>  false,  // イベントのみ編集を考慮して必須としていません
+            'max'       =>  PHOTO_MAX_SIZE * 1024,
+            'custom'    =>  'checkPhotos',
+        ],
+    ];
 
     /**
-     *  Form input value convert filter : sample
+     *  終了の日時が開始の日時より後になっているか確認する
      *
-     *  @access protected
-     *  @param  mixed   $value  Form Input Value
-     *  @return mixed           Converted result.
+     *  @param  string  $name   終了の日時のname属性値
      */
-    /*
-    protected function _filter_sample($value)
+    public function checkPublishEndAt(string $name): void
     {
-        //  convert to upper case.
-        return strtoupper($value);
-    }
-    */
-
-    function validatePublishEndAt($name){
+        // 開始の日時のname属性値
         $target = 'publish_at';
-        if(strtotime($this->form_vars[$name]) < strtotime($this->form_vars[$target])){
+
+        if (strtotime($this->form_vars[$name]) < strtotime($this->form_vars[$target])) {
             $this->action_error->add($name, '{form} が ' . $this->getName($target) . 'を超えています', E_FORM_INVALIDVALUE);
         }
     }
 
-    function validatePhotos($name){
-        $accept_types = [
-            'image/jpeg',
-        ];
-
-        if($this->form_vars[$name][0]['error'] === UPLOAD_ERR_NO_FILE){
+    /**
+     *  写真が追加可能なファイルか確認する
+     *
+     *  @param  string  $name   写真のname属性値
+     */
+    public function checkPhotos(string $name): void
+    {
+        // 写真が送られていなかったら何もしない
+        if ($this->form_vars[$name][0]['error'] === UPLOAD_ERR_NO_FILE) {
             return;
         }
 
-        foreach($this->form_vars[$name] as $photo){
-            if(!in_array($photo['type'], $accept_types, true)){
-                $this->action_error->add($name, '{form} のフォーマットは JPEG 形式ではありません', E_FORM_INVALIDVALUE);
+        foreach ($this->form_vars[$name] as $photo) {
+            if (!in_array($photo['type'], PHOTO_ACCEPT_TYPES, true)) {
+                $this->action_error->add($name, '{form} はアップロードできるフォーマットではありません', E_FORM_INVALIDVALUE);
             }
         }
     }
 }
 
-/**
- *  event_edit action implementation.
- *
- *  @author     {$author}
- *  @access     public
- *  @package    Yeahcheese
- */
 class Yeahcheese_Action_EventEdit extends Yeahcheese_ActionClass
 {
 
-    private $user_id = null;
-    private $event_id = null;
+    private $userId = null;
 
-    /**
-     *  preprocess of event_edit Action.
-     *
-     *  @access public
-     *  @return string    forward name(null: success.
-     *                                false: in case you want to exit.)
-     */
+    private $eventId = null;
+
     public function prepare()
     {
-        $this->user_id = 1;
-        $this->event_id = $this->action_form->get('event_id');
+        $this->userId = 1;  // 未実装のため仮データ
+        $this->eventId = $this->action_form->get('event_id');
 
-        $is_send_form = $this->action_form->get('name') !== null;
-        if (!$is_send_form || $is_send_form && $this->action_form->validate() > 0) {
+        // イベント編集フォームが送られていない場合、またはバリデーションで失敗した場合はフォームを表示する
+        $isSendForm = $this->action_form->get('name') !== null;
+        if (!$isSendForm || $isSendForm && $this->action_form->validate() > 0) {
 
-            if($this->event_id){
+            // リンク元から event_id が送られていない場合は新規イベントのフォームを表示する
+            if ($this->eventId) {
                 $eventManager = $this->backend->getManager('event');
-                $current = $eventManager->getEvent($this->event_id);
+                $current = $eventManager->getEvent($this->eventId);
 
-                $this->action_form->setApp('event_id', $this->event_id);
+                $this->action_form->setApp('event_id', $this->eventId);
                 $this->action_form->setApp('name', $current['name']);
                 $this->action_form->setApp('hash', $current['hash']);
                 $this->action_form->setApp('publish_at', $current['publish_at']);
@@ -159,29 +122,24 @@ class Yeahcheese_Action_EventEdit extends Yeahcheese_ActionClass
         return null;
     }
 
-    /**
-     *  event_edit action implementation.
-     *
-     *  @access public
-     *  @return string  forward name.
-     */
     public function perform()
     {
+        // フォームから event_id が送られていない場合は新規イベント
         $eventManager = $this->backend->getManager('event');
-        if(! $this->event_id){
-            $this->event_id = $eventManager->addUserEvent($this->user_id, $this->action_form->form_vars);
-        }else{
-            $eventManager->editUserEvent($this->user_id, $this->event_id, $this->action_form->form_vars);
+        if (! $this->eventId) {
+            $this->eventId = $eventManager->addUserEvent($this->userId, $this->action_form->form_vars);
+        } else {
+            $eventManager->editUserEvent($this->userId, $this->eventId, $this->action_form->form_vars);
         }
 
-        if($this->action_form->get('photo')[0]['error'] !== UPLOAD_ERR_NO_FILE){
-            foreach($this->action_form->get('photos') as $photo){
+        if ($this->action_form->get('photo')[0]['error'] !== UPLOAD_ERR_NO_FILE) {
+            foreach ($this->action_form->get('photos') as $photo) {
                 $photoManager = $this->backend->getManager('photo');
-                $photoManager->addEventPhoto($this->event_id, $photo['tmp_name']);
+                $photoManager->addEventPhoto($this->eventId, $photo['tmp_name']);
             }
         }
 
-        header('Location: ?action_event_show=true&event_id=' . $this->event_id);
+        header('Location: ?action_event_show=true&event_id=' . $this->eventId);
 
         return null;
     }
