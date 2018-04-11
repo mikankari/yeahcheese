@@ -1,21 +1,21 @@
 
-create table users (
-    id      serial  primary key,
-    name    text    not null,
-    mail    text    not null    unique,
-    hash    text    not null
+CREATE TABLE users (
+    id      SERIAL  PRIMARY KEY,
+    name    TEXT    NOT NULL,
+    mail    TEXT    NOT NULL    UNIQUE,
+    hash    TEXT    NOT NULL
 );
 
-create table events (
-    id              serial      primary key,
-    user_id         int         not null,
-    name            text        not null,
-    hash            text        not null    unique,
-    publish_at      timestamp    not null,
-    publish_end_at  timestamp    not null
+CREATE TABLE events (
+    id              SERIAL      PRIMARY KEY,
+    user_id         INT         NOT NULL,
+    name            TEXT        NOT NULL,
+    hash            TEXT        NOT NULL    UNIQUE,
+    publish_at      TIMESTAMP   NOT NULL,
+    publish_end_at  TIMESTAMP   NOT NULL
 );
 
-create table photos (
-    id          serial  primary key,
-    event_id    int     not null
+CREATE TABLE photos (
+    id          SERIAL  PRIMARY KEY,
+    event_id    INT     NOT NULL
 );
