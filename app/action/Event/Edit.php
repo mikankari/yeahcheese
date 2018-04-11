@@ -63,7 +63,10 @@ class Yeahcheese_Form_EventEdit extends Yeahcheese_ActionForm
         // 開始の日時のname属性値
         $target = 'publish_at';
 
-        if (strtotime($this->form_vars[$name]) < strtotime($this->form_vars[$target])) {
+        $start = new DateTime($this->form_vars[$target]);
+        $end = new DateTime($this->form_vars[$name]);
+
+        if ($end->getTimestamp() < $start->getTimestamp()) {
             $this->action_error->add($name, '{form} が ' . $this->getName($target) . 'を超えています', E_FORM_INVALIDVALUE);
         }
     }
