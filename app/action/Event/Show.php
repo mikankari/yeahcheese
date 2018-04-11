@@ -44,6 +44,10 @@ class Yeahcheese_Form_EventShow extends Yeahcheese_ActionForm
         *                                        // is defined in this(parent) class.
         *  ),
         */
+        'event_id' => [
+            'type' => VAR_TYPE_INT,
+            'required' => true,
+        ],
     );
 
     /**
@@ -71,6 +75,9 @@ class Yeahcheese_Form_EventShow extends Yeahcheese_ActionForm
  */
 class Yeahcheese_Action_EventShow extends Yeahcheese_ActionClass
 {
+
+    private $event_id = null;
+
     /**
      *  preprocess of event_show Action.
      *
@@ -80,13 +87,12 @@ class Yeahcheese_Action_EventShow extends Yeahcheese_ActionClass
      */
     public function prepare()
     {
-        /**
-        if ($this->af->validate() > 0) {
-            // forward to error view (this is sample)
-            return 'error';
+        if($this->action_form->validate() > 0){
+            return 'error404';
         }
-        $sample = $this->af->get('sample');
-        */
+
+        $event_id = $this->action_form->get('event_id');
+
         return null;
     }
 
@@ -98,8 +104,6 @@ class Yeahcheese_Action_EventShow extends Yeahcheese_ActionClass
      */
     public function perform()
     {
-        $event_id = 1;
-
         $photoManager = $this->backend->getManager('photo');
         $photos = $photoManager->getEventPhotos($event_id);
 
