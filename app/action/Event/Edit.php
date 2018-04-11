@@ -46,6 +46,7 @@ class Yeahcheese_Form_EventEdit extends Yeahcheese_ActionForm
         */
         'event_id' => [
             'type'      =>  VAR_TYPE_INT,
+            'form_type' =>  FORM_TYPE_HIDDEN,
         ],
         'name' => [
             'type'      =>  VAR_TYPE_STRING,
@@ -135,14 +136,25 @@ class Yeahcheese_Action_EventEdit extends Yeahcheese_ActionClass
      */
     public function prepare()
     {
-        $is_send_form = $this->action_form->get('name') !== null;
-
-        if (!$is_send_form || $is_send_form && $this->action_form->validate() > 0) {
-            return 'event_edit';
-        }
-
         $this->user_id = 1;
         $this->event_id = $this->action_form->get('event_id');
+
+        $is_send_form = $this->action_form->get('name') !== null;
+        if (!$is_send_form || $is_send_form && $this->action_form->validate() > 0) {
+
+            if($this->event_id){
+                $eventManager = $this->backend->getManager('event');
+                $current = $eventManager->getEvent($this->event_id);
+
+                $this->action_form->setApp('event_id', $this->event_id);
+                $this->action_form->setApp('name', $current['name']);
+                $this->action_form->setApp('hash', $current['hash']);
+                $this->action_form->setApp('publish_at', $current['publish_at']);
+                $this->action_form->setApp('publish_end_at', $current['publish_end_at']);
+            }
+
+            return 'event_edit';
+        }
 
         return null;
     }
@@ -158,6 +170,8 @@ class Yeahcheese_Action_EventEdit extends Yeahcheese_ActionClass
         $eventManager = $this->backend->getManager('event');
         if(! $this->event_id){
             $this->event_id = $eventManager->addUserEvent($this->user_id, $this->action_form->form_vars);
+        }else{
+            $eventManager->editUserEvent($this->user_id, $this->event_id, $this->action_form->form_vars);
         }
 
         if($this->action_form->get('photo')[0]['error'] !== UPLOAD_ERR_NO_FILE){
