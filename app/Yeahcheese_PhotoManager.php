@@ -32,20 +32,22 @@ class Yeahcheese_PhotoManager extends Ethna_AppManager
      *
      *  @param  int     $eventId    対象とするイベントのID
      *  @param  string  $tmp_name   サーバが一時的にアップロードしたファイルのパス
-     *  @return bool                成功したらTRUE
+     *  @return int                 追加した写真のID。失敗した場合はFALSE。
      */
-    public function addEventPhoto(int $eventId, string $tmpName): bool
+    public function addEventPhoto(int $eventId, string $tmpName): int
     {
         $result = $this->db->query('INSERT INTO photos (event_id) VALUES (?)', [
             $eventId,
         ]);
 
-        if ($result) {
-            $insertId = $this->db->getOne('SELECT max(id) FROM photos');
-
-            move_uploaded_file($tmpName, UPLOAD_PATH . $insertId. '.jpg');
+        if (! $result) {
+            return false;
         }
 
-        return (boolean) $result;
+        $insertId = $this->db->getOne('SELECT max(id) FROM photos');
+
+        move_uploaded_file($tmpName, UPLOAD_PATH . $insertId. '.jpg');
+
+        return $insertId;
     }
 }
