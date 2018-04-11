@@ -46,7 +46,7 @@ class Yeahcheese_PhotoManager extends Ethna_AppManager
 
         $insertId = $this->db->getOne('SELECT max(id) FROM photos');
 
-        move_uploaded_file($tmpName, UPLOAD_PATH . $insertId. '.jpg');
+        move_uploaded_file($tmpName, Yeahcheese_PhotoManager::UPLOAD_PATH . $insertId. '.jpg');
 
         return $insertId;
     }
