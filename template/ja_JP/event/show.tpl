@@ -9,3 +9,4 @@
 {/foreach}
 
 <a href="?action_event_edit=true&event_id={$app.event_id}">編集</a>
+<a href="?action_event_login_revoke=true">ログアウト</a>

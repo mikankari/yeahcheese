@@ -15,6 +15,11 @@ class Yeahcheese_Action_EventLoginRevoke extends Yeahcheese_ActionClass
 
     public function perform()
     {
+        $eventManager = $this->backend->getManager('event');
+        $eventManager->logout();
+
+        header('Location: ?action_event_login=true');
+
         return null;
     }
 }
