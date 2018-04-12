@@ -43,7 +43,7 @@ class Yeahcheese_EventManager extends Ethna_AppManager
      */
     public function addUserEvent(int $userId, array $formVars): int
     {
-        $result = $this->db->execute('INSERT INTO events (user_id, name, hash, publish_at, publish_end_at) VALUES (?, ?, ?, ?, ?)', [
+        $result = $this->db->execute('INSERT INTO events (user_id, name, password, publish_start_at, publish_end_at) VALUES (?, ?, ?, ?, ?)', [
             $userId,
             $formVars['name'],
             uniqid(),   // 未実装のため仮データ
@@ -70,7 +70,7 @@ class Yeahcheese_EventManager extends Ethna_AppManager
      */
     public function editUserEvent(int $userId, int $eventId, array $formVars): int
     {
-        $result = $this->db->execute('UPDATE events SET name = ?, publish_at = ?, publish_end_at = ? WHERE id = ? AND user_id = ?', [
+        $result = $this->db->execute('UPDATE events SET name = ?, publish_start_at = ?, publish_end_at = ? WHERE id = ? AND user_id = ?', [
             $formVars['name'],
             $formVars['publish_at'],
             $formVars['publish_end_at'],
