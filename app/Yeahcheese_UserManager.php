@@ -19,7 +19,7 @@ class Yeahcheese_UserManager extends Ethna_AppManager
     {
         $userId = $this->db->getOne('SELECT id FROM users WHERE email = ? AND password = ?', [
             $email,
-            hash('sha256', $password),
+            $this->hash($password),
         ]);
 
         if (! $userId) {
@@ -51,7 +51,7 @@ class Yeahcheese_UserManager extends Ethna_AppManager
         $result = $this->db->execute('INSERT INTO users (name, email, password) VALUES (?, ?, ?)', [
             $formVars['name'],
             $formVars['email'],
-            hash('sha256', $formVars['password']),
+            $this->hash($formVars['password']),
         ]);
 
         if (! $result) {
@@ -59,6 +59,17 @@ class Yeahcheese_UserManager extends Ethna_AppManager
         }
 
         return $this->login($formVars['email'], $formVars['password']);
+    }
+
+    /**
+     *  パスワードのハッシュ化方法。登録や認証の場合に用いられます。
+     *
+     *  @param  string  $password   生のパスワード
+     *  @return string              パスワードのハッシュ
+     */
+    private function hash($password): string
+    {
+        return hash('sha256', $password);
     }
 
     /**
