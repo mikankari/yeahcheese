@@ -31,6 +31,14 @@ class Yeahcheese_EventManager extends Ethna_AppManager
     }
 
     /**
+     *  認証を取り消す
+     */
+    public function logout(): void
+    {
+        $this->session->set('event_id', false);
+    }
+
+    /**
      *  あるユーザが投稿したすべてのイベントを取得する
      *
      *  @param  int     $userId 対象とするユーザのID
