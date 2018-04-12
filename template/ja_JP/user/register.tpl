@@ -17,3 +17,5 @@
 {form_name name="password_confirm"}{form_input name="password_confirm"}
 {form_submit value="登録"}
 {/form}
+
+<a href="?action_user_login=true">ログイン</a>

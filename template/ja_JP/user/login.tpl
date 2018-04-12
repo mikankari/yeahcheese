@@ -15,3 +15,5 @@
 {form_name name="password"}{form_input name="password"}
 {form_submit value="ログイン"}
 {/form}
+
+<a href="?action_user_register=true">会員登録</a>

@@ -63,6 +63,11 @@ class Yeahcheese_Action_UserRegisterExecute extends Yeahcheese_ActionClass
 
     public function perform()
     {
+        $userManager = $this->backend->getManager('user');
+        $userManager->register($this->action_form->form_vars);
+
+        header('Location: ?action_user_index=true');
+
         return null;
     }
 }
