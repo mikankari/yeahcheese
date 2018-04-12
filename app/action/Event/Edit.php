@@ -48,7 +48,7 @@ class Yeahcheese_Form_EventEdit extends Yeahcheese_ActionForm
             'form_type' =>  FORM_TYPE_FILE,
             'name'      =>  '写真',
             'required'  =>  false,  // イベントのみ編集を考慮して必須としていません
-            'max'       =>  Yeahcheese_Form_EventEdit::PHOTO_MAX_SIZE * 1024,
+            'max'       =>  self::PHOTO_MAX_SIZE * 1024,
             'custom'    =>  'checkPhotos',
         ],
     ];
@@ -66,7 +66,7 @@ class Yeahcheese_Form_EventEdit extends Yeahcheese_ActionForm
         $start = new DateTime($this->form_vars[$target]);
         $end = new DateTime($this->form_vars[$name]);
 
-        if ($end->getTimestamp() < $start->getTimestamp()) {
+        if ($end < $start) {
             $this->action_error->add($name, '{form} が ' . $this->getName($target) . 'を超えています', E_FORM_INVALIDVALUE);
         }
     }
@@ -84,7 +84,7 @@ class Yeahcheese_Form_EventEdit extends Yeahcheese_ActionForm
         }
 
         foreach ($this->form_vars[$name] as $photo) {
-            if (!in_array($photo['type'], Yeahcheese_Form_EventEdit::PHOTO_ACCEPT_TYPES, true)) {
+            if (!in_array($photo['type'], self::PHOTO_ACCEPT_TYPES, true)) {
                 $this->action_error->add($name, '{form} はアップロードできるフォーマットではありません', E_FORM_INVALIDVALUE);
             }
         }
