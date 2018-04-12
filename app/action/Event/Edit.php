@@ -24,6 +24,7 @@ class Yeahcheese_Form_EventEdit extends Yeahcheese_ActionForm
         'event_id' => [
             'type'      =>  VAR_TYPE_INT,
             'form_type' =>  FORM_TYPE_HIDDEN,
+            'required'  =>  false,  // 未入力は新規イベントとする
         ],
         'name' => [
             'type'      =>  VAR_TYPE_STRING,
