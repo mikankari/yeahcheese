@@ -9,6 +9,28 @@
 class Yeahcheese_EventManager extends Ethna_AppManager
 {
     /**
+     *  閲覧者がイベントデータにアクセスするために認証する
+     *
+     *  @param  string  $password   認証キー
+     *  @return int     $eventId    認証キーに登録されたイベントのID
+     */
+    public function login(string $password): int
+    {
+        $eventId = $this->db->getOne('SELECT id FROM events WHERE password = ?', [
+            $password, // 実装予定： hash('sha256', $password),
+        ]);
+
+        if (! $eventId) {
+            return false;
+        }
+
+        $this->session->start();
+        $this->session->set('event_id', $eventId);
+
+        return $eventId;
+    }
+
+    /**
      *  あるユーザが投稿したすべてのイベントを取得する
      *
      *  @param  int     $userId 対象とするユーザのID
