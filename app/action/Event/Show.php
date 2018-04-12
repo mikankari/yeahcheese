@@ -38,7 +38,7 @@ class Yeahcheese_Action_EventShow extends Yeahcheese_ActionClass
 
         $this->action_form->setApp('event_id', $this->eventId);
         $this->action_form->setApp('name', $current['name']);
-        $this->action_form->setApp('publish_at', $current['publish_at']);
+        $this->action_form->setApp('publish_start_at', $current['publish_start_at']);
         $this->action_form->setApp('publish_end_at', $current['publish_end_at']);
 
         $photoManager = $this->backend->getManager('photo');

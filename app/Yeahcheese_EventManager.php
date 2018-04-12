@@ -38,7 +38,7 @@ class Yeahcheese_EventManager extends Ethna_AppManager
      *  あるユーザによるイベントを追加する
      *
      *  @param  int     $userId     追加するユーザのID
-     *  @param  array   $formVars   name, publish_at, publish_end_at をキーとして持つ連想配列
+     *  @param  array   $formVars   name, publish_start_at, publish_end_at をキーとして持つ連想配列
      *  @return int                 追加したイベントのID。失敗した場合はFALSE。
      */
     public function addUserEvent(int $userId, array $formVars): int
@@ -47,7 +47,7 @@ class Yeahcheese_EventManager extends Ethna_AppManager
             $userId,
             $formVars['name'],
             uniqid(),   // 未実装のため仮データ
-            $formVars['publish_at'],
+            $formVars['publish_start_at'],
             $formVars['publish_end_at'],
         ]);
 
@@ -65,14 +65,14 @@ class Yeahcheese_EventManager extends Ethna_AppManager
      *
      *  @param  int     $userId     イベントを追加したユーザのID。イベントを追加したユーザと一致すれば編集します。
      *  @param  int     $eventId    対象とするイベントのID
-     *  @param  array   $formVars   name, publish_at, publish_end_at をキーとして持つ連想配列
+     *  @param  array   $formVars   name, publish_start_at, publish_end_at をキーとして持つ連想配列
      *  @return int                 編集したイベントのID。対象とするイベントIDと同等です。失敗した場合はFALSE。
      */
     public function editUserEvent(int $userId, int $eventId, array $formVars): int
     {
         $result = $this->db->execute('UPDATE events SET name = ?, publish_start_at = ?, publish_end_at = ? WHERE id = ? AND user_id = ?', [
             $formVars['name'],
-            $formVars['publish_at'],
+            $formVars['publish_start_at'],
             $formVars['publish_end_at'],
             $eventId,
             $userId,

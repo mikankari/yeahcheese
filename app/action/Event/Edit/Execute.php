@@ -31,7 +31,7 @@ class Yeahcheese_Form_EventEditExecute extends Yeahcheese_ActionForm
             'name'      =>  'イベント名',
             'required'  =>  true,
         ],
-        'publish_at' => [
+        'publish_start_at' => [
             'type'      =>  VAR_TYPE_DATETIME,
             'name'      =>  '公開期間の開始',
             'required'  =>  true,
@@ -62,7 +62,7 @@ class Yeahcheese_Form_EventEditExecute extends Yeahcheese_ActionForm
     public function checkPublishEndAt(string $name): void
     {
         // 開始の日時のname属性値
-        $target = 'publish_at';
+        $target = 'publish_start_at';
 
         $start = new DateTime($this->form_vars[$target]);
         $end = new DateTime($this->form_vars[$name]);
