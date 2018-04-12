@@ -21,6 +21,8 @@ require_once 'Yeahcheese_ActionForm.php';
 require_once 'Yeahcheese_ViewClass.php';
 require_once 'Yeahcheese_UrlHandler.php';
 
+require_once BASE . '/lib/adodb/adodb.inc.php';
+
 /**
  *  Yeahcheese application Controller definition.
  *
@@ -121,7 +123,7 @@ class Yeahcheese_Controller extends Ethna_Controller
         'class'         => 'Ethna_ClassFactory',
         'backend'       => 'Ethna_Backend',
         'config'        => 'Ethna_Config',
-        'db'            => 'Ethna_DB_PEAR',
+        'db'            => 'Ethna_DB_ADOdb',
         'error'         => 'Ethna_ActionError',
         'form'          => 'Yeahcheese_ActionForm',
         'i18n'          => 'Ethna_I18N',
