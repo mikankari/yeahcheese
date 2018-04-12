@@ -32,11 +32,27 @@ class Yeahcheese_Action_UserLoginExecute extends Yeahcheese_ActionClass
             return 'user_login';
         }
 
+        $email = $this->action_form->get('email');
+        $password = $this->action_form->get('password');
+
+        $userManager = $this->backend->getManager('user');
+        $userId = $userManager->login($email, $password);
+        if (! $userId) {
+            $email_name = $this->action_form->getName('email');
+            $password_name = $this->action_form->getName('password');
+
+            $this->action_error->add(null, $email_name . 'または' . $password_name . 'が正しくありません', E_FORM_INVALIDVALUE);
+
+            return 'user_login';
+        }
+
         return null;
     }
 
     public function perform()
     {
+        header('Location: ?action_user_index=true');
+
         return null;
     }
 }
