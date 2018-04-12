@@ -33,6 +33,14 @@ class Yeahcheese_UserManager extends Ethna_AppManager
     }
 
     /**
+     *  認証を取り消す
+     */
+    public function logout(): void
+    {
+        $this->session->set('user_id', false);
+    }
+
+    /**
      *  認証済みのユーザを取得する
      *
      *  @return array   ユーザ。ログインしていない場合はFALSE。
