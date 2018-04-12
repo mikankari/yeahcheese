@@ -41,6 +41,27 @@ class Yeahcheese_UserManager extends Ethna_AppManager
     }
 
     /**
+     *  認証のための共有者を登録する
+     *
+     *  @param  array   $formVars   name, email, password をキーとして持つ連想配列
+     *  @return int                 登録した共有者のID
+     */
+    public function register($formVars): int
+    {
+        $result = $this->db->execute('INSERT INTO users (name, email, password) VALUES (?, ?, ?)', [
+            $formVars['name'],
+            $formVars['email'],
+            hash('sha256', $formVars['password']),
+        ]);
+
+        if (! $result) {
+            return false;
+        }
+
+        return $this->login($formVars['email'], $formVars['password']);
+    }
+
+    /**
      *  認証済みのユーザを取得する
      *
      *  @return array   ユーザ。ログインしていない場合はFALSE。
