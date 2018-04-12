@@ -44,16 +44,36 @@ class Yeahcheese_EventManager extends Ethna_AppManager
     }
 
     /**
-     *  あるイベント１件を取得する
+     *  閲覧者が認証済みのイベント、またはユーザが追加したあるイベントを取得する
      *
+     *  @param  int     $userId     共有者ユーザのID。閲覧者の場合はFALSE。
      *  @param  int     $eventId    対象とするイベントのID
-     *  @return array               イベント
+     *  @return array   イベント。認証していない場合はFALSE。
      */
-    public function getEvent(int $eventId): array
+    public function getLoginEvent($userId, $eventId): array
     {
-        return $this->db->getRow('SELECT * FROM events WHERE id = ?', [
-            $eventId,
-        ]);
+        $event = null;
+
+        if ($userId) {
+            $event = $this->db->getRow('SELECT * FROM events WHERE id = ? AND user_id = ?', [
+                $eventId,
+                $userId,
+            ]);
+        } else {
+            if ($eventId !== $this->session->get('event_id')) {
+                return false;
+            }
+
+            $event = $this->db->getRow('SELECT * FROM events WHERE id = ?', [
+                $eventId,
+            ]);
+        }
+
+        if (! $event){
+            return false;
+        }
+
+        return $event;
     }
 
     /**
