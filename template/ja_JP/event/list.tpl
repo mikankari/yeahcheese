@@ -5,3 +5,5 @@
 {$item.publish_at} から {$item.publish_end_at} まで
 <a href="?action_event_show=true&event_id={$item.id}">詳しく</a>
 {/foreach}
+
+<a href="?action_event_edit=true">追加</a>
