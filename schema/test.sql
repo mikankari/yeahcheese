@@ -1,8 +1,8 @@
-insert into users (name, mail, hash) values
-    ('ほげ', 'hoge@example.com', '9f56e761d79bfdb34304a012586cb04d16b435ef6130091a97702e559260a2f2');
+INSERT INTO users (name, email, password) VALUES
+    ('ほげ', 'hoge@example.com', 'd74ff0ee8da3b9806b18c877dbf29bbde50b5bd8e4dad7a3a725000feb82e8f1');
 
-insert into events (user_id, name, hash, publish_at, publish_end_at) values
-    (1, 'ふが入園式', '9f56e761d79bfdb34304a012586cb04d16b435ef6130091a97702e559260a2f2', '2018-04-10 00:00:00', '2018-05-10 00:00:00');
+INSERT INTO events (user_id, name, password, publish_start_at, publish_end_at) VALUES
+    (1, 'ふが入園式', 'd74ff0ee8da3b9806b18c877dbf29bbde50b5bd8e4dad7a3a725000feb82e8f1', '2018-04-10 00:00:00', '2018-05-10 00:00:00');
 
-insert into photos (event_id) values
+INSERT INTO photos (event_id) VALUES
     (1);
