@@ -12,7 +12,7 @@ class Yeahcheese_EventManager extends Ethna_AppManager
      *  閲覧者がイベントデータにアクセスするために認証する
      *
      *  @param  string  $password   認証キー
-     *  @return int     $eventId    認証キーに登録されたイベントのID
+     *  @return int     $eventId    認証キーに登録されたイベントのID。認証に失敗した場合は 0
      */
     public function login(string $password): int
     {
@@ -21,7 +21,7 @@ class Yeahcheese_EventManager extends Ethna_AppManager
         ]);
 
         if (! $eventId) {
-            return false;
+            return 0;
         }
 
         $this->session->start();
@@ -35,7 +35,7 @@ class Yeahcheese_EventManager extends Ethna_AppManager
      */
     public function logout(): void
     {
-        $this->session->set('event_id', false);
+        $this->session->set('event_id', 0);
     }
 
     /**
@@ -54,13 +54,13 @@ class Yeahcheese_EventManager extends Ethna_AppManager
     /**
      *  閲覧者が認証済みのイベント、またはユーザが追加したあるイベントを取得する
      *
-     *  @param  int     $userId     共有者ユーザのID。閲覧者の場合はFALSE。
+     *  @param  int     $userId     共有者ユーザのID。閲覧者の場合は FALSE
      *  @param  int     $eventId    対象とするイベントのID
-     *  @return array   イベント。認証していない場合はFALSE。
+     *  @return array   イベント。認証していない場合は空の配列
      */
-    public function getLoginEvent($userId, $eventId): array
+    public function getLoginEvent(int $userId, int $eventId): array
     {
-        $event = null;
+        $event = [];
 
         if ($userId) {
             $event = $this->db->getRow('SELECT * FROM events WHERE id = ? AND user_id = ?', [
@@ -68,17 +68,13 @@ class Yeahcheese_EventManager extends Ethna_AppManager
                 $userId,
             ]);
         } else {
-            if ($eventId !== $this->session->get('event_id')) {
-                return false;
+            if ($eventId != $this->session->get('event_id')) {
+                return [];
             }
 
             $event = $this->db->getRow('SELECT * FROM events WHERE id = ?', [
                 $eventId,
             ]);
-        }
-
-        if (! $event){
-            return false;
         }
 
         return $event;
@@ -89,7 +85,7 @@ class Yeahcheese_EventManager extends Ethna_AppManager
      *
      *  @param  int     $userId     追加するユーザのID
      *  @param  array   $formVars   name, publish_start_at, publish_end_at をキーとして持つ連想配列
-     *  @return int                 追加したイベントのID。失敗した場合はFALSE。
+     *  @return int                 追加したイベントのID。失敗した場合は 0
      */
     public function addUserEvent(int $userId, array $formVars): int
     {
@@ -102,12 +98,10 @@ class Yeahcheese_EventManager extends Ethna_AppManager
         ]);
 
         if (! $result) {
-            return false;
+            return 0;
         }
 
-        $insertId = $this->db->getOne('SELECT MAX(id) FROM events');
-
-        return $insertId;
+        return $this->db->getOne('SELECT MAX(id) FROM events');
     }
 
     /**
@@ -116,7 +110,7 @@ class Yeahcheese_EventManager extends Ethna_AppManager
      *  @param  int     $userId     イベントを追加したユーザのID。イベントを追加したユーザと一致すれば編集します。
      *  @param  int     $eventId    対象とするイベントのID
      *  @param  array   $formVars   name, publish_start_at, publish_end_at をキーとして持つ連想配列
-     *  @return int                 編集したイベントのID。対象とするイベントIDと同等です。失敗した場合はFALSE。
+     *  @return int                 編集したイベントのID。対象とするイベントIDと同等です。失敗した場合は 0
      */
     public function editUserEvent(int $userId, int $eventId, array $formVars): int
     {
@@ -129,7 +123,7 @@ class Yeahcheese_EventManager extends Ethna_AppManager
         ]);
 
         if (! $result) {
-            return false;
+            return 0;
         }
 
         return $eventId;
