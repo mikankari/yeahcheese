@@ -18,3 +18,9 @@
     {form_name name="photos"} {form_input name="photos"}
     {form_submit value="送信"}
 {/form}
+
+{foreach from=$app.photos item=item}
+    <img src="{$app.photos_base_url}{$item.id}.jpg" alt="投稿した写真">
+{foreachelse}
+    写真はまだありません
+{/foreach}

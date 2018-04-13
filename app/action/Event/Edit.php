@@ -37,6 +37,12 @@ class Yeahcheese_Action_EventEdit extends Yeahcheese_ActionClass
             $this->action_form->setApp('password', $current['password']);
             $this->action_form->setApp('publish_start_at', $current['publish_start_at']);
             $this->action_form->setApp('publish_end_at', $current['publish_end_at']);
+
+            $photoManager = $this->backend->getManager('photo');
+            $photos = $photoManager->getEventPhotos($eventId);
+
+            $this->action_form->setApp('photos', $photos);
+            $this->action_form->setApp('photos_base_url', Yeahcheese_PhotoManager::UPLOAD_URL);
         }
 
         return 'event_edit';
