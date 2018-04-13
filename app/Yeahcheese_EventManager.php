@@ -109,10 +109,12 @@ class Yeahcheese_EventManager extends Ethna_AppManager
      */
     public function addUserEvent(int $userId, array $formVars): int
     {
+        $password = $this->generatePassword();
+
         $result = $this->db->execute('INSERT INTO events (user_id, name, password, publish_start_at, publish_end_at) VALUES (?, ?, ?, ?, ?)', [
             $userId,
             $formVars['name'],
-            $this->generatePassword(),
+            $password,
             $formVars['publish_start_at'],
             $formVars['publish_end_at'],
         ]);
@@ -120,6 +122,8 @@ class Yeahcheese_EventManager extends Ethna_AppManager
         if (! $result) {
             return 0;
         }
+
+        $this->login($password);
 
         return $this->db->getOne('SELECT MAX(id) FROM events');
     }
