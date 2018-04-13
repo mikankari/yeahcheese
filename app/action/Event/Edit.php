@@ -25,11 +25,12 @@ class Yeahcheese_Action_EventEdit extends Yeahcheese_ActionClass
 
     public function perform()
     {
+        $userId = 1;    // 未実装のため仮データ
         $eventId = $this->action_form->get('event_id');
 
         if ($eventId) {
             $eventManager = $this->backend->getManager('event');
-            $current = $eventManager->getEvent($eventId);
+            $current = $eventManager->getLoginEvent($userId, $eventId);
 
             $this->action_form->setApp('event_id', $eventId);
             $this->action_form->setApp('name', $current['name']);
