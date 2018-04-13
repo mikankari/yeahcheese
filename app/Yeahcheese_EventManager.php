@@ -76,7 +76,7 @@ class Yeahcheese_EventManager extends Ethna_AppManager
      *
      *  @param  int     $userId     共有者ユーザのID。閲覧者の場合は FALSE
      *  @param  int     $eventId    対象とするイベントのID
-     *  @return array   イベント。認証していない場合は空の配列
+     *  @return array   イベント。認証していない、または公開期限外の場合は空の配列
      */
     public function getLoginEvent(int $userId, int $eventId): array
     {
@@ -92,7 +92,7 @@ class Yeahcheese_EventManager extends Ethna_AppManager
                 return [];
             }
 
-            $event = $this->db->getRow('SELECT * FROM events WHERE id = ?', [
+            $event = $this->db->getRow('SELECT * FROM events WHERE id = ? AND CURRENT_TIMESTAMP BETWEEN publish_start_at AND publish_end_at', [
                 $eventId,
             ]);
         }
