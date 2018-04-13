@@ -39,6 +39,26 @@ class Yeahcheese_EventManager extends Ethna_AppManager
     }
 
     /**
+     *  既存のイベントと重複しない認証キーを発行する
+     *
+     *  @return string  認証キー
+     */
+    private function generatePassword(): string
+    {
+        $password = '';
+
+        do {
+            $password = uniqid();
+
+            $isDuplicated = $this->db->getOne('SELECT id FROM events WHERE password = ?', [
+                $password,
+            ]);
+        } while ($isDuplicated);
+
+        return $password;
+    }
+
+    /**
      *  あるユーザが投稿したすべてのイベントを取得する
      *
      *  @param  int     $userId 対象とするユーザのID
@@ -92,7 +112,7 @@ class Yeahcheese_EventManager extends Ethna_AppManager
         $result = $this->db->execute('INSERT INTO events (user_id, name, password, publish_start_at, publish_end_at) VALUES (?, ?, ?, ?, ?)', [
             $userId,
             $formVars['name'],
-            uniqid(),   // 未実装のため仮データ
+            $this->generatePassword(),
             $formVars['publish_start_at'],
             $formVars['publish_end_at'],
         ]);
