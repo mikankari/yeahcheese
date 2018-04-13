@@ -25,6 +25,8 @@ class Yeahcheese_Action_EventShow extends Yeahcheese_ActionClass
     public function prepare()
     {
         if ($this->action_form->validate() > 0) {
+            http_response_code(404);
+
             return 'error404';
         }
 
@@ -35,6 +37,8 @@ class Yeahcheese_Action_EventShow extends Yeahcheese_ActionClass
         $this->event = $eventManager->getLoginEvent($this->userId, $this->eventId);
 
         if (! $this->event) {
+            http_response_code(403);
+
             return 'error403';
         }
 
