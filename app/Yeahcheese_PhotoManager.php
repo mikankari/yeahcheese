@@ -50,4 +50,29 @@ class Yeahcheese_PhotoManager extends Ethna_AppManager
 
         return $insertId;
     }
+
+    /**
+     *  あるイベントの写真を削除する
+     *
+     *  @param  int     $eventId    対象とする写真のイベントのID
+     *  @param  array   $photos     対象とする写真のIDの配列
+     *  @return array               削除した写真のIDの配列。対象とする写真のIDの配列と同等です。失敗した場合は空の配列
+     */
+    public function removeEventPhotos(int $eventId, array $photos): array
+    {
+        $result = $this->db->execute('DELETE FROM photos where event_id = ? AND id IN (?)', [
+            $eventId,
+            implode(',', $photos),
+        ]);
+
+        if (! $result) {
+            return [];
+        }
+
+        foreach ($photos as $photoId) {
+            unlink(self::UPLOAD_PATH . $photoId . '.jpg');
+        }
+
+        return $photos;
+    }
 }
