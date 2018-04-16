@@ -18,20 +18,31 @@ class Yeahcheese_Form_EventEdit extends Yeahcheese_ActionForm
 
 class Yeahcheese_Action_EventEdit extends Yeahcheese_ActionClass
 {
+    private $userId = null;
+
     public function prepare()
     {
+        $userManager = $this->backend->getManager('user');
+        $user = $userManager->getUser();
+
+        if (! $user) {
+            http_response_code(403);
+
+            return 'error403';
+        }
+
+        $this->userId = $user['id'];
+
         return null;
     }
 
     public function perform()
     {
-        $userManager = $this->backend->getManager('user');
-        $userId = $userManager->getUser()['id'];
         $eventId = $this->action_form->get('event_id');
 
         if ($eventId) {
             $eventManager = $this->backend->getManager('event');
-            $current = $eventManager->getLoginEvent($userId, $eventId);
+            $current = $eventManager->getLoginEvent($this->userId, $eventId);
 
             $this->action_form->setApp('event_id', $eventId);
             $this->action_form->setApp('name', $current['name']);
