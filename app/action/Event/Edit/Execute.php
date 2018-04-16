@@ -133,7 +133,7 @@ class Yeahcheese_Action_EventEditExecute extends Yeahcheese_ActionClass
 
         $this->action_form->setApp('event_id', $event['id']);
         $this->action_form->setApp('name', $event['name']);
-        $this->action_form->setApp('password', $event['password']);
+        $this->action_form->setApp('password', $eventManager->getLastPassword());
         $this->action_form->setApp('publish_start_at', $event['publish_start_at']);
         $this->action_form->setApp('publish_end_at', $event['publish_end_at']);
 

@@ -8,6 +8,8 @@
 
 class Yeahcheese_EventManager extends Ethna_AppManager
 {
+    private $lastPassword = '';
+
     /**
      *  閲覧者がイベントデータにアクセスするために認証する
      *
@@ -17,7 +19,7 @@ class Yeahcheese_EventManager extends Ethna_AppManager
     public function login(string $password): int
     {
         $eventId = $this->db->getOne('SELECT id FROM events WHERE password = ?', [
-            $password, // 実装予定： hash('sha256', $password),
+            $this->hash($password),
         ]);
 
         if (! $eventId) {
@@ -39,6 +41,17 @@ class Yeahcheese_EventManager extends Ethna_AppManager
     }
 
     /**
+     *  認証キーのハッシュ化方法。イベントの追加や認証の場合に用いられます。
+     *
+     *  @param  string  $password   生の認証キー
+     *  @return string              認証キーのハッシュ
+     */
+    public function hash(string $password): string
+    {
+        return hash('sha256', $password);
+    }
+
+    /**
      *  既存のイベントと重複しない認証キーを発行する
      *
      *  @return string  認証キー
@@ -55,7 +68,19 @@ class Yeahcheese_EventManager extends Ethna_AppManager
             ]);
         } while ($isDuplicated);
 
+        $this->lastPassword = $password;
+
         return $password;
+    }
+
+    /**
+     *  generatePassword で発行された直近の認証キーを取得する
+     *
+     *  @return string  認証キー
+     **/
+    public function getLastPassword(): string
+    {
+        return $this->lastPassword;
     }
 
     /**
@@ -114,7 +139,7 @@ class Yeahcheese_EventManager extends Ethna_AppManager
         $result = $this->db->execute('INSERT INTO events (user_id, name, password, publish_start_at, publish_end_at) VALUES (?, ?, ?, ?, ?)', [
             $userId,
             $formVars['name'],
-            $password,
+            $this->hash($password),
             $formVars['publish_start_at'],
             $formVars['publish_end_at'],
         ]);
