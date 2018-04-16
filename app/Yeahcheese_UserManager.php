@@ -13,9 +13,9 @@ class Yeahcheese_UserManager extends Ethna_AppManager
      *
      *  @param  string  $email      共有者のメールアドレス
      *  @param  string  $password   共有者のパスワード
-     *  @return int                 共有者のID
+     *  @return int                 共有者のID。失敗した場合は 0
      */
-    public function login($email, $password): int
+    public function login(string $email, string $password): int
     {
         $userId = $this->db->getOne('SELECT id FROM users WHERE email = ? AND password = ?', [
             $email,
@@ -23,7 +23,7 @@ class Yeahcheese_UserManager extends Ethna_AppManager
         ]);
 
         if (! $userId) {
-            return false;
+            return 0;
         }
 
         $this->session->start();
@@ -44,9 +44,9 @@ class Yeahcheese_UserManager extends Ethna_AppManager
      *  認証のための共有者を登録する
      *
      *  @param  array   $formVars   name, email, password をキーとして持つ連想配列
-     *  @return int                 登録した共有者のID
+     *  @return int                 登録した共有者のID。失敗した場合は 0
      */
-    public function register($formVars): int
+    public function register(array $formVars): int
     {
         $result = $this->db->execute('INSERT INTO users (name, email, password) VALUES (?, ?, ?)', [
             $formVars['name'],
@@ -55,7 +55,7 @@ class Yeahcheese_UserManager extends Ethna_AppManager
         ]);
 
         if (! $result) {
-            return false;
+            return 0;
         }
 
         return $this->login($formVars['email'], $formVars['password']);
@@ -67,7 +67,7 @@ class Yeahcheese_UserManager extends Ethna_AppManager
      *  @param  string  $password   生のパスワード
      *  @return string              パスワードのハッシュ
      */
-    private function hash($password): string
+    private function hash(string $password): string
     {
         return hash('sha256', $password);
     }
@@ -75,14 +75,14 @@ class Yeahcheese_UserManager extends Ethna_AppManager
     /**
      *  認証済みのユーザを取得する
      *
-     *  @return array   ユーザ。ログインしていない場合はFALSE。
+     *  @return array   ユーザ。ログインしていない場合は空の配列
      */
     public function getUser(): array
     {
         $userId = $this->session->get('user_id');
 
         if (! $userId) {
-            return false;
+            return [];
         }
 
         return $this->db->getRow('SELECT * FROM users WHERE id = ?', [
