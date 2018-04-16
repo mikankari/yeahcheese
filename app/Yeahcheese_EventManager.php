@@ -125,7 +125,7 @@ class Yeahcheese_EventManager extends Ethna_AppManager
 
         $this->login($password);
 
-        return $this->db->getOne('SELECT MAX(id) FROM events');
+        return $this->db->getOne('SELECT lastval()');
     }
 
     /**
