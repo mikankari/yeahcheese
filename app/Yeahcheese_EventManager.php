@@ -99,7 +99,7 @@ class Yeahcheese_EventManager extends Ethna_AppManager
     /**
      *  閲覧者が認証済みのイベント、またはユーザが追加したあるイベントを取得する
      *
-     *  @param  int     $userId     共有者ユーザのID。イベントを追加したユーザと一致すれば取得します。閲覧者の場合は FALSE
+     *  @param  int     $userId     共有者ユーザのID。イベントを追加したユーザと一致すれば取得します。閲覧者の場合は 0
      *  @param  int     $eventId    対象とするイベントのID
      *  @return array               イベント。認証していない、または公開期限外の場合は空の配列
      */
