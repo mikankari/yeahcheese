@@ -17,6 +17,8 @@
  */
 class Yeahcheese_ActionClass extends Ethna_ActionClass
 {
+    protected $user = [];
+
     /**
      *  authenticate before executing action.
      *
@@ -39,9 +41,9 @@ class Yeahcheese_ActionClass extends Ethna_ActionClass
 
         if (in_array($current, $requiredLogin)) {
             $userManager = $this->backend->getManager('user');
-            $user = $userManager->getUser();
+            $this->user = $userManager->getUser();
 
-            if (! $user) {
+            if (! $this->user) {
                 http_response_code(403);
 
                 return 'error403';
