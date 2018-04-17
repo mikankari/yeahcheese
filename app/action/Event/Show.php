@@ -18,7 +18,6 @@ class Yeahcheese_Form_EventShow extends Yeahcheese_ActionForm
 
 class Yeahcheese_Action_EventShow extends Yeahcheese_ActionClass
 {
-    private $userId = null;
     private $eventId = null;
     private $event = null;
 
@@ -30,11 +29,10 @@ class Yeahcheese_Action_EventShow extends Yeahcheese_ActionClass
             return 'error404';
         }
 
-        $this->userId = 0;  // 未実装のため仮データ
         $this->eventId = $this->action_form->get('event_id');
 
         $eventManager = $this->backend->getManager('event');
-        $this->event = $eventManager->getLoginEvent($this->userId, $this->eventId);
+        $this->event = $eventManager->getLoginEvent($this->user['id'], $this->eventId);
 
         if (! $this->event) {
             http_response_code(403);
