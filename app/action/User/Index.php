@@ -15,8 +15,6 @@ class Yeahcheese_Action_UserIndex extends Yeahcheese_ActionClass
 
     public function perform()
     {
-        $this->action_form->setApp('email', $this->user['email']);
-
         return 'user_index';
     }
 }

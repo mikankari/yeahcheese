@@ -8,6 +8,8 @@
     写真はまだありません
 {/foreach}
 
-<a href="?action_event_edit=true&event_id={$app.eventId}">編集</a>
-<a href="?action_event_list=true">イベント一覧</a>
+{if $app.user}
+    <a href="?action_event_edit=true&event_id={$app.eventId}">編集</a>
+    <a href="?action_event_list=true">イベント一覧</a>
+{/if}
 <a href="?action_event_login_revoke=true">ログアウト</a>
