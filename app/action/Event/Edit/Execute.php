@@ -109,7 +109,8 @@ class Yeahcheese_Action_EventEditExecute extends Yeahcheese_ActionClass
         $eventId = $this->action_form->get('event_id');
 
         $eventManager = $this->backend->getManager('event');
-        if (! $eventId) {
+
+        if ($latest = (! $eventId)) {
             $eventId = $eventManager->addUserEvent($userId, $this->action_form->form_vars);
         } else {
             $eventManager->editUserEvent($userId, $eventId, $this->action_form->form_vars);
@@ -122,8 +123,20 @@ class Yeahcheese_Action_EventEditExecute extends Yeahcheese_ActionClass
             }
         }
 
-        header('Location: ?action_event_show=true&event_id=' . $eventId);
+        if (! $latest) {
+            header('Location: ?action_event_show=true&event_id=' . $eventId);
 
-        return null;
+            return null;
+        }
+
+        $event = $eventManager->getLoginEvent($userId, $eventId);
+
+        $this->action_form->setApp('eventId', $event['id']);
+        $this->action_form->setApp('name', $event['name']);
+        $this->action_form->setApp('password', $eventManager->getLastPassword());
+        $this->action_form->setApp('publishStartAt', $event['publish_start_at']);
+        $this->action_form->setApp('publishEndAt', $event['publish_end_at']);
+
+        return 'event_edit_execute';
     }
 }

@@ -32,22 +32,51 @@ class Yeahcheese_PhotoManager extends Ethna_AppManager
      *
      *  @param  int     $eventId    対象とするイベントのID
      *  @param  string  $tmp_name   サーバが一時的にアップロードしたファイルのパス
-     *  @return int                 追加した写真のID。失敗した場合はFALSE。
+     *  @return int                 追加した写真のID。失敗した場合は 0
      */
     public function addEventPhoto(int $eventId, string $tmpName): int
     {
-        $result = $this->db->query('INSERT INTO photos (event_id) VALUES (?)', [
+        $result = $this->db->execute('INSERT INTO photos (event_id) VALUES (?)', [
             $eventId,
         ]);
 
         if (! $result) {
-            return false;
+            return 0;
         }
 
-        $insertId = $this->db->getOne('SELECT max(id) FROM photos');
+        $insertId = $this->db->getOne('SELECT lastval()');
 
         move_uploaded_file($tmpName, self::UPLOAD_PATH . $insertId. '.jpg');
 
         return $insertId;
+    }
+
+    /**
+     *  あるイベントの写真を削除する
+     *
+     *  @param  int     $eventId    対象とする写真のイベントのID
+     *  @param  array   $photos     対象とする写真のIDの配列
+     *  @return array               削除した写真のIDの配列。対象とする写真のIDの配列と同等です。失敗した場合は空の配列
+     */
+    public function removeEventPhotos(int $eventId, array $photos): array
+    {
+        if(count($photos) === 0){
+            return [];
+        }
+
+        $result = $this->db->execute('DELETE FROM photos where event_id = ? AND id IN (?' . str_repeat(', ?', count($photos) - 1) . ')', array_merge(
+            [$eventId],
+            $photos
+        ));
+
+        if (! $result) {
+            return [];
+        }
+
+        foreach ($photos as $photoId) {
+            unlink(self::UPLOAD_PATH . $photoId . '.jpg');
+        }
+
+        return $photos;
     }
 }
