@@ -43,7 +43,7 @@ class Yeahcheese_PhotoManager extends Ethna_AppManager
         ]);
 
         if (! $check) {
-            return 0;
+            return [];
         }
 
         if (count($photos) === 0) {
@@ -53,7 +53,7 @@ class Yeahcheese_PhotoManager extends Ethna_AppManager
         $result = $this->db->execute('INSERT INTO photos (event_id) VALUES (?)' . str_repeat(', (?)', count($photos) - 1), array_fill(0, count($photos), $eventId));
 
         if (! $result) {
-            return 0;
+            return [];
         }
 
         $insertId = $this->db->getOne('SELECT lastval()') - count($photos);
@@ -69,7 +69,7 @@ class Yeahcheese_PhotoManager extends Ethna_AppManager
     /**
      *  あるイベントの写真を削除する
      *
-        @param  int     $userId     イベントを追加したユーザのID。イベントを追加したユーザと一致すれば写真を削除します
+     *  @param  int     $userId     イベントを追加したユーザのID。イベントを追加したユーザと一致すれば写真を削除します
      *  @param  int     $eventId    対象とする写真のイベントのID
      *  @param  array   $photos     対象とする写真のIDの配列
      *  @return array               削除した写真のIDの配列。対象とする写真のIDの配列と同等です。失敗した場合は空の配列
