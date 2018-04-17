@@ -9,3 +9,4 @@
 {/foreach}
 
 <a href="?action_event_edit=true">追加</a>
+<a href="?action_user_index=true">アカウント設定</a>

@@ -29,3 +29,6 @@
     {/foreach}
     選択した{form_name name="photos"}を{form_submit value="削除"}
 {/form}
+
+<a href="?action_event_show=true&event_id={$app.eventId}">戻る</a>
+<a href="?action_event_list=true">イベント一覧</a>
