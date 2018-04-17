@@ -60,10 +60,14 @@ class Yeahcheese_PhotoManager extends Ethna_AppManager
      */
     public function removeEventPhotos(int $eventId, array $photos): array
     {
-        $result = $this->db->execute('DELETE FROM photos where event_id = ? AND id IN (?)', [
-            $eventId,
-            implode(',', $photos),
-        ]);
+        if(count($photos) === 0){
+            return [];
+        }
+
+        $result = $this->db->execute('DELETE FROM photos where event_id = ? AND id IN (?' . str_repeat(', ?', count($photos) - 1) . ')', array_merge(
+            [$eventId],
+            $photos
+        ));
 
         if (! $result) {
             return [];
