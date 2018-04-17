@@ -32,17 +32,17 @@ class Yeahcheese_Action_EventEdit extends Yeahcheese_ActionClass
             $eventManager = $this->backend->getManager('event');
             $current = $eventManager->getLoginEvent($userId, $eventId);
 
-            $this->action_form->setApp('event_id', $eventId);
+            $this->action_form->setApp('eventId', $eventId);
             $this->action_form->setApp('name', $current['name']);
             $this->action_form->setApp('password', $current['password']);
-            $this->action_form->setApp('publish_start_at', $current['publish_start_at']);
-            $this->action_form->setApp('publish_end_at', $current['publish_end_at']);
+            $this->action_form->setApp('publishStartAt', $current['publish_start_at']);
+            $this->action_form->setApp('publishEndAt', $current['publish_end_at']);
 
             $photoManager = $this->backend->getManager('photo');
             $photos = $photoManager->getEventPhotos($eventId);
 
             $this->action_form->setApp('photos', $photos);
-            $this->action_form->setApp('photos_base_url', Yeahcheese_PhotoManager::UPLOAD_URL);
+            $this->action_form->setApp('photosBaseUrl', Yeahcheese_PhotoManager::UPLOAD_URL);
         }
 
         return 'event_edit';
