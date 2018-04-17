@@ -39,15 +39,13 @@ class Yeahcheese_ActionClass extends Ethna_ActionClass
 
         $current = $this->backend->controller->getCurrentActionName();
 
-        if (in_array($current, $requiredLogin)) {
-            $userManager = $this->backend->getManager('user');
-            $this->user = $userManager->getUser();
+        $userManager = $this->backend->getManager('user');
+        $this->user = $userManager->getUser();
 
-            if (! $this->user) {
-                http_response_code(403);
+        if (in_array($current, $requiredLogin) && ! $this->user) {
+            http_response_code(403);
 
-                return 'error403';
-            }
+            return 'error403';
         }
 
         return null;
