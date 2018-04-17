@@ -37,7 +37,7 @@ class Yeahcheese_Action_EventLoginExecute extends Yeahcheese_ActionClass
             return 'event_login';
         }
 
-        $event = $eventManager->getLoginEvent(false, $this->eventId);
+        $event = $eventManager->getLoginEvent(0, $this->eventId);
         if (! $event) {
             $this->action_error->add('password', 'イベントは公開期限外です', E_FORM_INVALIDVALUE);
 

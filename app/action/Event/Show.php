@@ -30,7 +30,7 @@ class Yeahcheese_Action_EventShow extends Yeahcheese_ActionClass
             return 'error404';
         }
 
-        $this->userId = false;  // 未実装のため仮データ
+        $this->userId = 0;  // 未実装のため仮データ
         $this->eventId = $this->action_form->get('event_id');
 
         $eventManager = $this->backend->getManager('event');
