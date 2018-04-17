@@ -26,7 +26,29 @@ class Yeahcheese_ActionClass extends Ethna_ActionClass
      */
     public function authenticate()
     {
-        return parent::authenticate();
+        $requiredLogin = [
+            'event_edit',
+            'event_edit_execute',
+            'event_edit_delete',
+            'event_list',
+            'user_index',
+            'user_login_revoke',
+        ];
+
+        $current = $this->backend->controller->getCurrentActionName();
+
+        if (in_array($current, $requiredLogin)) {
+            $userManager = $this->backend->getManager('user');
+            $user = $userManager->getUser();
+
+            if (! $user) {
+                http_response_code(403);
+
+                return 'error403';
+            }
+        }
+
+        return null;
     }
 
     /**
