@@ -18,7 +18,9 @@ class Yeahcheese_Form_EventShow extends Yeahcheese_ActionForm
 
 class Yeahcheese_Action_EventShow extends Yeahcheese_ActionClass
 {
+    private $userId = null;
     private $eventId = null;
+    private $event = null;
 
     public function prepare()
     {
@@ -26,20 +28,25 @@ class Yeahcheese_Action_EventShow extends Yeahcheese_ActionClass
             return 'error404';
         }
 
+        $this->userId = false;  // 未実装のため仮データ
         $this->eventId = $this->action_form->get('event_id');
+
+        $eventManager = $this->backend->getManager('event');
+        $this->event = $eventManager->getLoginEvent($this->userId, $this->eventId);
+
+        if (! $this->event) {
+            return 'error403';
+        }
 
         return null;
     }
 
     public function perform()
     {
-        $eventManager = $this->backend->getManager('event');
-        $current = $eventManager->getEvent($this->eventId);
-
-        $this->action_form->setApp('event_id', $this->eventId);
-        $this->action_form->setApp('name', $current['name']);
-        $this->action_form->setApp('publish_start_at', $current['publish_start_at']);
-        $this->action_form->setApp('publish_end_at', $current['publish_end_at']);
+        $this->action_form->setApp('event_id', $this->event['id']);
+        $this->action_form->setApp('name', $this->event['name']);
+        $this->action_form->setApp('publish_start_at', $this->event['publish_start_at']);
+        $this->action_form->setApp('publish_end_at', $this->event['publish_end_at']);
 
         $photoManager = $this->backend->getManager('photo');
         $photos = $photoManager->getEventPhotos($this->eventId);

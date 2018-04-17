@@ -7,3 +7,5 @@
 {foreachelse}
     イベントはまだありません
 {/foreach}
+
+<a href="?action_event_edit=true">追加</a>

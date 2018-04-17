@@ -115,7 +115,7 @@ class Yeahcheese_Action_EventEditExecute extends Yeahcheese_ActionClass
             $eventManager->editUserEvent($userId, $eventId, $this->action_form->form_vars);
         }
 
-        if ($this->action_form->get('photo')[0]['error'] !== UPLOAD_ERR_NO_FILE) {
+        if ($this->action_form->get('photos')[0]['error'] !== UPLOAD_ERR_NO_FILE) {
             foreach ($this->action_form->get('photos') as $photo) {
                 $photoManager = $this->backend->getManager('photo');
                 $photoManager->addEventPhoto($eventId, $photo['tmp_name']);
