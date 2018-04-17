@@ -105,15 +105,20 @@ class Yeahcheese_Action_EventEditExecute extends Yeahcheese_ActionClass
 
     public function perform()
     {
-        $userId = 1;  // 未実装のため仮データ
         $eventId = $this->action_form->get('event_id');
 
         $eventManager = $this->backend->getManager('event');
 
         if ($latest = (! $eventId)) {
-            $eventId = $eventManager->addUserEvent($userId, $this->action_form->form_vars);
+            $eventId = $eventManager->addUserEvent($this->user['id'], $this->action_form->form_vars);
         } else {
-            $eventManager->editUserEvent($userId, $eventId, $this->action_form->form_vars);
+            $eventId = $eventManager->editUserEvent($this->user['id'], $eventId, $this->action_form->form_vars);
+        }
+
+        if (! $eventId) {
+            $this->action_error->add(null, 'イベントの編集に失敗しました', E_APP_INTERNAL);
+
+            return 'event_edit';
         }
 
         if ($this->action_form->get('photos')[0]['error'] !== UPLOAD_ERR_NO_FILE) {
@@ -129,7 +134,7 @@ class Yeahcheese_Action_EventEditExecute extends Yeahcheese_ActionClass
             return null;
         }
 
-        $event = $eventManager->getLoginEvent($userId, $eventId);
+        $event = $eventManager->getLoginEvent($this->user['id'], $eventId);
 
         $this->action_form->setApp('eventId', $event['id']);
         $this->action_form->setApp('name', $event['name']);
