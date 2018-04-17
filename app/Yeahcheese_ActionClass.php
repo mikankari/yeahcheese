@@ -48,6 +48,8 @@ class Yeahcheese_ActionClass extends Ethna_ActionClass
             return 'error403';
         }
 
+        $this->action_form->setApp('user', $this->user);
+
         return null;
     }
 
