@@ -30,12 +30,22 @@ class Yeahcheese_PhotoManager extends Ethna_AppManager
     /**
      *  あるイベントに写真を追加する
      *
+     *  @param  int     $userId     イベントを追加したユーザのID。イベントを追加したユーザと一致すれば写真を追加します
      *  @param  int     $eventId    対象とするイベントのID
      *  @param  string  $tmp_name   サーバが一時的にアップロードしたファイルのパス
      *  @return int                 追加した写真のID。失敗した場合は 0
      */
-    public function addEventPhoto(int $eventId, string $tmpName): int
+    public function addEventPhoto(int $userId, int $eventId, string $tmpName): int
     {
+        $check = $this->db->getOne('SELECT id FROM events WHERE id = ? AND user_id = ?', [
+            $eventId,
+            $userId,
+        ]);
+
+        if (! $check) {
+            return 0;
+        }
+
         $result = $this->db->execute('INSERT INTO photos (event_id) VALUES (?)', [
             $eventId,
         ]);
@@ -54,12 +64,22 @@ class Yeahcheese_PhotoManager extends Ethna_AppManager
     /**
      *  あるイベントの写真を削除する
      *
+        @param  int     $userId     イベントを追加したユーザのID。イベントを追加したユーザと一致すれば写真を削除します
      *  @param  int     $eventId    対象とする写真のイベントのID
      *  @param  array   $photos     対象とする写真のIDの配列
      *  @return array               削除した写真のIDの配列。対象とする写真のIDの配列と同等です。失敗した場合は空の配列
      */
-    public function removeEventPhotos(int $eventId, array $photos): array
+    public function removeEventPhotos(int $userId, int $eventId, array $photos): array
     {
+        $check = $this->db->getOne('SELECT id FROM events WHERE id = ? AND user_id = ?', [
+            $eventId,
+            $userId,
+        ]);
+
+        if (! $check) {
+            return [];
+        }
+
         if(count($photos) === 0){
             return [];
         }

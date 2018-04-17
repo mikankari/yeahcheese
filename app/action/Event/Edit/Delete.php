@@ -40,7 +40,7 @@ class Yeahcheese_Action_EventEditDelete extends Yeahcheese_ActionClass
         $photos = $this->action_form->get('photos');
 
         $photoManager = $this->backend->getManager('photo');
-        $photoManager->removeEventPhotos($eventId, $photos);
+        $photoManager->removeEventPhotos($this->user['id'], $eventId, $photos);
 
         header('Location: ?action_event_edit=true&event_id=' . $eventId);
 
