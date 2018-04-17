@@ -110,7 +110,7 @@ class Yeahcheese_Action_EventEditExecute extends Yeahcheese_ActionClass
 
         $eventManager = $this->backend->getManager('event');
 
-        if ($latest = ! $eventId) {
+        if ($latest = (! $eventId)) {
             $eventId = $eventManager->addUserEvent($userId, $this->action_form->form_vars);
         } else {
             $eventManager->editUserEvent($userId, $eventId, $this->action_form->form_vars);
