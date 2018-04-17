@@ -18,8 +18,21 @@ class Yeahcheese_Form_EventEdit extends Yeahcheese_ActionForm
 
 class Yeahcheese_Action_EventEdit extends Yeahcheese_ActionClass
 {
+    private $userId = null;
+
     public function prepare()
     {
+        $userManager = $this->backend->getManager('user');
+        $user = $userManager->getUser();
+
+        if (! $user) {
+            http_response_code(403);
+
+            return 'error403';
+        }
+
+        $this->userId = $user['id'];
+
         return null;
     }
 
