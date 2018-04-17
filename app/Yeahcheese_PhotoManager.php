@@ -32,10 +32,10 @@ class Yeahcheese_PhotoManager extends Ethna_AppManager
      *
      *  @param  int     $userId     イベントを追加したユーザのID。イベントを追加したユーザと一致すれば写真を追加します
      *  @param  int     $eventId    対象とするイベントのID
-     *  @param  string  $tmp_name   サーバが一時的にアップロードしたファイルのパス
-     *  @return int                 追加した写真のID。失敗した場合は 0
+     *  @param  array   $photos     サーバが一時的にアップロードしたファイルのパスの配列
+     *  @return array               追加した写真のファイルのパスの配列。引数のファイルのパスの配列と同等です。失敗した場合は 0
      */
-    public function addEventPhoto(int $userId, int $eventId, string $tmpName): int
+    public function addEventPhoto(int $userId, int $eventId, array $photos): array
     {
         $check = $this->db->getOne('SELECT id FROM events WHERE id = ? AND user_id = ?', [
             $eventId,
@@ -46,19 +46,24 @@ class Yeahcheese_PhotoManager extends Ethna_AppManager
             return 0;
         }
 
-        $result = $this->db->execute('INSERT INTO photos (event_id) VALUES (?)', [
-            $eventId,
-        ]);
+        if (count($photos) === 0) {
+            return [];
+        }
+
+        $result = $this->db->execute('INSERT INTO photos (event_id) VALUES (?)' . str_repeat(', (?)', count($photos) - 1), array_fill(0, count($photos), $eventId));
 
         if (! $result) {
             return 0;
         }
 
-        $insertId = $this->db->getOne('SELECT lastval()');
+        $insertId = $this->db->getOne('SELECT lastval()') - count($photos);
 
-        move_uploaded_file($tmpName, self::UPLOAD_PATH . $insertId. '.jpg');
+        foreach ($photos as $tmpName) {
+            $insertId++;
+            move_uploaded_file($tmpName, self::UPLOAD_PATH . $insertId. '.jpg');
+        }
 
-        return $insertId;
+        return $photos;
     }
 
     /**
@@ -80,7 +85,7 @@ class Yeahcheese_PhotoManager extends Ethna_AppManager
             return [];
         }
 
-        if(count($photos) === 0){
+        if (count($photos) === 0) {
             return [];
         }
 
