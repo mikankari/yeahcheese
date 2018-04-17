@@ -32,7 +32,7 @@ class Yeahcheese_Action_EventShow extends Yeahcheese_ActionClass
         $this->eventId = $this->action_form->get('event_id');
 
         $eventManager = $this->backend->getManager('event');
-        $this->event = $eventManager->getLoginEvent($this->user['id'], $this->eventId);
+        $this->event = $eventManager->getLoginEvent((int) $this->user['id'], $this->eventId);
 
         if (! $this->event) {
             http_response_code(403);
