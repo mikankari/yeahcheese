@@ -112,7 +112,9 @@ class Yeahcheese_EventManager extends Ethna_AppManager
                 $eventId,
                 $userId,
             ]);
-        } else {
+        }
+
+        if(! $event){
             if ($eventId != $this->session->get('event_id')) {
                 return [];
             }
