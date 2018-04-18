@@ -127,6 +127,27 @@ class Yeahcheese_EventManager extends Ethna_AppManager
         return $event;
     }
 
+    public static function formatPublishAt(int $userId, string $start, string $end): string
+    {
+        $week_ja = [
+            '日', '月', '火', '水', '木', '金', '土',
+        ];
+        $format = 'Y 年 n 月 j 日 D H:i';
+
+        $startParsed = new DateTime($start);
+        $endParsed = new DateTime($end);
+
+        $result = '';
+
+        if ($userId) {
+            $result .= $startParsed->format($format) . ' から ';
+        }
+
+        $result .= $endParsed->format($format) . ' まで';
+
+        return $result;
+    }
+
     /**
      *  あるユーザによるイベントを追加する
      *

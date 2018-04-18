@@ -1,7 +1,7 @@
 <div class="ui container">
   <h2 class="ui header">{$app.name}</h2>
 
-  <p>{$app.publishStartAt} から {$app.publishEndAt} まで</p>
+  <p>{$app.formatedPublishAt}</p>
   {if $app.user}
     <a href="?action_event_list=true" class="ui button"><i class="icon arrow left"></i>戻る</a>
     <a href="?action_event_edit=true&event_id={$app.eventId}" class="ui black button"><i class="icon edit"></i>編集</a>
