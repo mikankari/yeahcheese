@@ -3,7 +3,8 @@
 
   <p>{$app.publishStartAt} から {$app.publishEndAt} まで</p>
   {if $app.user}
-    <a href="?action_event_edit=true&event_id={$app.eventId}" class="ui button">編集</a>
+    <a href="?action_event_list=true" class="ui button">戻る</a>
+    <a href="?action_event_edit=true&event_id={$app.eventId}" class="ui black button">編集</a>
   {/if}
 
   <div class="ui hidden divider"></div>
