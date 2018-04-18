@@ -5,6 +5,10 @@
   {if $app.user}
     <a href="?action_event_list=true" class="ui button">戻る</a>
     <a href="?action_event_edit=true&event_id={$app.eventId}" class="ui black button">編集</a>
+  {else}
+    <div class="ui right aligned container">
+      <a href="?action_event_login_revoke=true" class="ui button">他のイベントを見る</a>
+    </div>
   {/if}
 
   <div class="ui hidden divider"></div>
