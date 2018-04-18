@@ -25,6 +25,6 @@
   </table>
 
   <div class="ui center aligned container">
-    <a href="?action_event_show=true&event_id={$app.eventId}" class="ui black button">イベントページへ</a>
+    <a href="?action_event_show=true&event_id={$app.eventId}" class="ui black button"><i class="icon arrow right"></i>イベントページへ</a>
   </div>
 </div>

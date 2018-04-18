@@ -17,11 +17,11 @@
         <h1 style="font-family: BrushScriptMT;">Yeahcheese!</h1>
       </div>
       {if $app.user}
-      <a href="?action_event_list=true" class="item">イベント一覧</a>
-      <a href="?action_event_edit=true" class="item">イベント追加</a>
+      <a href="?action_event_list=true" class="item"><i class="icon list"></i>イベント一覧</a>
+      <a href="?action_event_edit=true" class="item"><i class="icon plus"></i>イベント追加</a>
       <div class="right menu">
         <a href="?action_user_index=true" class="item">{$app.user.email} さん</a>
-        <a href="?action_user_login_revoke=true" class="item">ログアウト</a>
+        <a href="?action_user_login_revoke=true" class="item"><i class="icon sign out"></i>ログアウト</a>
       </div>
       {/if}
     </div>

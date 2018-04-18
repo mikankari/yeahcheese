@@ -33,8 +33,8 @@
       <label for="photos">{form_name name="photos"}の追加</label>
        {form_input name="photos" id="photos"}
     </div>
-    <a href="?action_event_{if $app.eventId}show=true&event_id={$app.eventId}{else}list=true{/if}" class="ui button">戻る</a>
-    {form_submit value="送信" class="ui black button"}
+    <a href="?action_event_{if $app.eventId}show=true&event_id={$app.eventId}{else}list=true{/if}" class="ui button"><i class="icon arrow left"></i>戻る</a>
+    <button type="submit" class="ui black button"><i class="icon save"></i>送信</button>
   {/form}
 
   <div class="ui hidden divider"></div>
@@ -62,6 +62,6 @@
     {foreachelse}
       <p>写真はまだありません</p>
     {/foreach}
-    {form_submit value="削除" class="ui black button"}
+    <button type="submit" class="ui black button"><i class="icon trash"></i>削除</button>
   {/form}
 </div>

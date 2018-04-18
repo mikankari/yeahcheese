@@ -7,7 +7,7 @@
     {/if}
     <div class="item">
       <div class="right floated content">
-        <a href="?action_event_edit=true&event_id={$item.id}" class="ui gray button">編集</a>
+        <a href="?action_event_edit=true&event_id={$item.id}" class="ui gray button"><i class="icon edit"></i>編集</a>
       </div>
       <div class="content">
         <a href="?action_event_show=true&event_id={$item.id}" class="header">{$item.name}</a>
@@ -21,5 +21,5 @@
     <p>イベントはまだありません</p>
   {/foreach}
 
-  <a href="?action_event_edit=true" class="ui black button">追加</a>
+  <a href="?action_event_edit=true" class="ui black button"><i class="icon plus"></i>追加</a>
 </div>

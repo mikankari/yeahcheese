@@ -32,7 +32,7 @@
       <label for="password_confirm">{form_name name="password_confirm"}</label>
       {form_input name="password_confirm" id="password_confirm" class="form-control"}
     </div>
-    {form_submit value="登録" class="ui fluid black submit button"}
+    <button type="submit" class="ui fluid black button"><i class="icon sign in"></i>登録</button>
   {/form}
 
   <div class="ui message">
