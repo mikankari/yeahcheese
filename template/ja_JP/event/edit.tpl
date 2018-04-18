@@ -33,7 +33,7 @@
       <label for="photos">{form_name name="photos"}の追加</label>
        {form_input name="photos" id="photos"}
     </div>
-    <a href="?action_event_show=true&event_id={$app.eventId}" class="ui button">戻る</a>
+    <a href="?action_event_{if $app.eventId}show=true&event_id={$app.eventId}{else}list=true{/if}" class="ui button">戻る</a>
     {form_submit value="送信" class="ui black button"}
   {/form}
 
