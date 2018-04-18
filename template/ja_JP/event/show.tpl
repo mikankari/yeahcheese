@@ -1,15 +1,24 @@
-<h2>{$app.name}</h2>
+<div class="ui container">
+  <h2 class="ui header">{$app.name}</h2>
 
-{$app.publishStartAt} から {$app.publishEndAt} まで
+  <p>{$app.publishStartAt} から {$app.publishEndAt} まで</p>
+  {if $app.user}
+    <a href="?action_event_edit=true&event_id={$app.eventId}" class="ui button">編集</a>
+  {/if}
 
-{foreach from=$app.photos item=item}
-    <img src="{$app.photosBaseUrl}{$item.id}.jpg" alt="投稿した写真">
-{foreachelse}
-    写真はまだありません
-{/foreach}
+  <div class="ui hidden divider"></div>
 
-{if $app.user}
-    <a href="?action_event_edit=true&event_id={$app.eventId}">編集</a>
-    <a href="?action_event_list=true">イベント一覧</a>
-{/if}
-<a href="?action_event_login_revoke=true">ログアウト</a>
+  {foreach from=$app.photos item=item name=photos}
+    {if $smarty.foreach.photos.first}
+      <div class="ui grid">
+    {/if}
+    <div class="four wide column">
+      <img src="{$app.photosBaseUrl}{$item.id}.jpg" alt="投稿した写真" class="ui fluid image">
+    </div>
+    {if $smarty.foreach.photos.last}
+      </div>
+    {/if}
+  {foreachelse}
+    <p>写真はまだありません</p>
+  {/foreach}
+</div>
