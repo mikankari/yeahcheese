@@ -8,6 +8,10 @@
       <th>公開期限</th>
       <td>{$app_ne.formatedPublishAt}</td>
     </tr>
+    <tr>
+      <th>枚数</th>
+      <td>{$app.photosCount}</td>
+    </tr>
   </table>
   {if $app.user}
     <a href="?action_event_list=true" class="ui button"><i class="icon arrow left"></i>戻る</a>

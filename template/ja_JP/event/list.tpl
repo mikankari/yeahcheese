@@ -16,6 +16,10 @@
                 <th>公開期限</th>
                 <td>{$app_ne.formatedPublishAt[$item.id]}</td>
             </tr>
+            <tr>
+                <th>枚数</th>
+                <td>{$app.photosCount[$item.id]}</td>
+            </tr>
         </table>
       </div>
     </div>

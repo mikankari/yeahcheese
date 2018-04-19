@@ -27,6 +27,16 @@ class Yeahcheese_Action_EventList extends Yeahcheese_ActionClass
 
         $this->action_form->setAppNE('formatedPublishAt', $formatedPublishAt);
 
+        $photosCount = [];
+        foreach ($events as $item) {
+            $photoManager = $this->backend->getManager('photo');
+            $photos = $photoManager->getEventPhotos($item['id']);
+
+            $photosCount[$item['id']] = count($photos);
+        }
+
+        $this->action_form->setApp('photosCount', $photosCount);
+
         return 'event_list';
     }
 }
