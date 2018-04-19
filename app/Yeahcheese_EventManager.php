@@ -156,6 +156,32 @@ class Yeahcheese_EventManager extends Ethna_AppManager
     }
 
     /**
+     *  公開期限のタイムスタンプから現在の公開状況を取得する
+     *
+     *  @param  string  $start  公開期限の開始のタイムスタンプ
+     *  @param  string  $end    公開期限の終了のタイムスタンプ
+     *  @return string          表示する公開状況
+     */
+    public static function getStatusLabel(string $start, string $end): string
+    {
+        $startParsed = new DateTime($start);
+        $endParsed = new DateTime($end);
+        $current = new DateTime();
+
+        $status = '<div class="ui horizontal label">';
+        if ($startParsed > $current) {
+            $status .= '公開予定';
+        } else if ($startParsed <= $current && $current <= $endParsed) {
+            $status .= '公開中';
+        } else {
+            $status .= '公開終了';
+        }
+        $status .= '</div>';
+
+        return $status;
+    }
+
+    /**
      *  あるユーザによるイベントを追加する
      *
      *  @param  int     $userId     追加するユーザのID
