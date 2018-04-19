@@ -6,7 +6,7 @@
   <table class="ui very basic collapsing table">
     <tr>
       <th>公開期限</th>
-      <td>{$app_ne.formatedPublishAt} {$app_ne.statusLabel}</td>
+      <td>{$app_ne.formatedPublishAt}</td>
     </tr>
     <tr>
       <th>枚数</th>
@@ -16,11 +16,10 @@
   {if $app.user}
     <a href="?action_event_list=true" class="ui button"><i class="icon arrow left"></i>戻る</a>
     <a href="?action_event_edit=true&event_id={$app.eventId}" class="ui black button"><i class="icon edit"></i>編集</a>
+    <a href="#" class="ui right floated disabled button">
   {else}
-    <div class="ui right aligned container">
-      <a href="?action_event_login_revoke=true" class="ui button"><i class="icon sign out"></i>他のイベントを見る</a>
-    </div>
-  {/if}
+    <a href="?action_event_login_revoke=true" class="ui right floated button">
+  {/if}<i class="icon sign out"></i>他のイベントを見る</a>
 
   <div class="ui hidden divider"></div>
 
