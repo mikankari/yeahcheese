@@ -11,7 +11,12 @@
       </div>
       <div class="content">
         <a href="?action_event_show=true&event_id={$item.id}" class="header">{$item.name}</a>
-        <p class="description">{$item.publish_start_at} から {$item.publish_end_at} まで</p>
+        <table class="description ui very basic table">
+            <tr>
+                <th>公開期限</th>
+                <td>{$app_ne.formatedPublishAt[$item.id]}</td>
+            </tr>
+        </table>
       </div>
     </div>
     {if $smarty.foreach.events.last}
