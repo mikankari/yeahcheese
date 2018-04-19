@@ -3,7 +3,7 @@
 
   {foreach from=$app.events item=item name=events}
     {if $smarty.foreach.events.first}
-      <div class="ui relaxed divided list">
+      <div class="ui very relaxed divided list">
     {/if}
     <div class="item">
       <div class="right floated content">
