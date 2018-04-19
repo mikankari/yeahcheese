@@ -1,7 +1,14 @@
 <div class="ui container">
-  <h2 class="ui header">{$app.name}</h2>
+  <div class="ui center aligned container">
+    <h2 class="ui header">{$app.name}</h2>
+  </div>
 
-  <p>{$app_ne.formatedPublishAt}</p>
+  <table class="ui very basic collapsing table">
+    <tr>
+      <th>公開期限</th>
+      <td>{$app_ne.formatedPublishAt}</td>
+    </tr>
+  </table>
   {if $app.user}
     <a href="?action_event_list=true" class="ui button"><i class="icon arrow left"></i>戻る</a>
     <a href="?action_event_edit=true&event_id={$app.eventId}" class="ui black button"><i class="icon edit"></i>編集</a>
