@@ -142,7 +142,7 @@ class Yeahcheese_EventManager extends Ethna_AppManager
         $startParsed = new DateTime($start);
         $endParsed = new DateTime($end);
 
-        $result = '<div class="date">';
+        $result = '<div class="largeNumOnly">';
 
         if ($userId) {
             $result .= $startParsed->format($format) . ' 〜 ' . $endParsed->format($format);

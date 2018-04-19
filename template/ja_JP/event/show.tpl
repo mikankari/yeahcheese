@@ -10,7 +10,7 @@
     </tr>
     <tr>
       <th>枚数</th>
-      <td><div class="date"><b>{$app.photosCount}</b> 枚</div></td>
+      <td><div class="largeNumOnly"><b>{$app.photosCount}</b> 枚</div></td>
     </tr>
   </table>
   {if $app.user}

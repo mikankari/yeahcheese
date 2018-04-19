@@ -1,7 +1,7 @@
-.date {
+.largeNumOnly {
   display: inline-block;
 }
-.date b {
+.largeNumOnly b {
   font-weight: normal;
   font-size: 1.214em;
 }
