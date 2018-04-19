@@ -1,5 +1,5 @@
 <div class="ui container">
-  <h2>イベントの編集</h2>
+  <h2 class="ui header">イベントの編集</h2>
 
   {if count($errors) > 0}
     <div class="ui message error">

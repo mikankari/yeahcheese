@@ -1,7 +1,5 @@
 <div class="ui container">
-  <div class="ui center aligned container">
-    <h2 class="ui header">{$app.name}</h2>
-  </div>
+  <h2 class="ui center aligned header">{$app.name}</h2>
 
   <table class="ui very basic collapsing table">
     <tr>

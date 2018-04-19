@@ -1,5 +1,5 @@
 <div class="ui text container">
-  <h2>イベント編集</h2>
+  <h2 class="ui header">イベント編集</h2>
 
   <p>イベントの追加が完了しました</p>
   <p>認証キーは今後、確認できません。大切に保管してください。</p>
