@@ -18,7 +18,7 @@
             </tr>
             <tr>
                 <th>枚数</th>
-                <td>{$app.photosCount[$item.id]}</td>
+                <td><div class="date"><b>{$app.photosCount[$item.id]}</b> 枚</div></td>
             </tr>
         </table>
       </div>
