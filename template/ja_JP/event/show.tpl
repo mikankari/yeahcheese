@@ -6,7 +6,7 @@
   <table class="ui very basic collapsing table">
     <tr>
       <th>公開期限</th>
-      <td>{$app_ne.formatedPublishAt}</td>
+      <td>{$app_ne.formatedPublishAt} {$app_ne.statusLabel}</td>
     </tr>
     <tr>
       <th>枚数</th>

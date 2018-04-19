@@ -46,9 +46,15 @@ class Yeahcheese_Action_EventShow extends Yeahcheese_ActionClass
     public function perform()
     {
         $formatedPublishAt = Yeahcheese_EventManager::formatPublishAt((int) $this->user['id'], $this->event['publish_start_at'], $this->event['publish_end_at']);
+        $statusLabel = '';
+        if ($this->user) {
+            $statusLabel = Yeahcheese_EventManager::getStatusLabel($this->event['publish_start_at'], $this->event['publish_end_at']);
+        }
+
         $this->action_form->setApp('eventId', $this->event['id']);
         $this->action_form->setApp('name', $this->event['name']);
         $this->action_form->setAppNE('formatedPublishAt', $formatedPublishAt);
+        $this->action_form->setAppNE('statusLabel', $statusLabel);
         $this->action_form->setApp('publishStartAt', $this->event['publish_start_at']);
         $this->action_form->setApp('publishEndAt', $this->event['publish_end_at']);
 

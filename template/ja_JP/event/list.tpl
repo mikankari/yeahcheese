@@ -14,7 +14,7 @@
         <table class="description ui very basic table">
             <tr>
                 <th>公開期限</th>
-                <td>{$app_ne.formatedPublishAt[$item.id]}</td>
+                <td>{$app_ne.formatedPublishAt[$item.id]} {$app_ne.statusLabel[$item.id]}</td>
             </tr>
             <tr>
                 <th>枚数</th>
