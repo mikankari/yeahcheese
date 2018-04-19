@@ -28,7 +28,9 @@
       <div class="ui grid">
     {/if}
     <div class="four wide column">
-      <img src="{$app.photosBaseUrl}{$item.id}.jpg" alt="投稿した写真" class="ui fluid image">
+      <div class="ui segment">
+        <img src="{$app.photosBaseUrl}{$item.id}.jpg" alt="投稿した写真" class="ui fluid image">
+      </div>
     </div>
     {if $smarty.foreach.photos.last}
       </div>
