@@ -127,23 +127,30 @@ class Yeahcheese_EventManager extends Ethna_AppManager
         return $event;
     }
 
+    /**
+     *  公開期限のタイムスタンプを表示のための書式に変換する
+     *
+     *  @param  int     $userId 表示を求めるユーザ。閲覧者の場合は 0
+     *  @param  string  $start  公開期限の開始のタイムスタンプ
+     *  @param  string  $end    公開期限の終了のタイムスタンプ
+     *  @return string          表示する公開期限
+     */
     public static function formatPublishAt(int $userId, string $start, string $end): string
     {
-        $week_ja = [
-            '日', '月', '火', '水', '木', '金', '土',
-        ];
-        $format = 'Y 年 n 月 j 日 D H:i';
+        $format = '<\b>Y</\b> 年 <\b>n</\b> 月 <\b>j</\b> 日 <\b>D H:i</\b>';
 
         $startParsed = new DateTime($start);
         $endParsed = new DateTime($end);
 
-        $result = '';
+        $result = '<div class="date">';
 
         if ($userId) {
-            $result .= $startParsed->format($format) . ' から ';
+            $result .= $startParsed->format($format) . ' 〜 ' . $endParsed->format($format);
+        } else {
+            $result .= $endParsed->format($format) . ' まで';
         }
 
-        $result .= $endParsed->format($format) . ' まで';
+        $result .= '</div>';
 
         return $result;
     }
