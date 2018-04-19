@@ -142,6 +142,9 @@ class Yeahcheese_Action_EventEditExecute extends Yeahcheese_ActionClass
         $this->action_form->setApp('publishStartAt', $event['publish_start_at']);
         $this->action_form->setApp('publishEndAt', $event['publish_end_at']);
 
+        $formatedPublishAt = Yeahcheese_EventManager::formatPublishAt($this->user['id'], $event['publish_start_at'], $event['publish_end_at']);
+        $this->action_form->setAppNE('formatedPublishAt', $formatedPublishAt);
+
         return 'event_edit_execute';
     }
 }
