@@ -30,37 +30,62 @@ class Yeahcheese_PhotoManager extends Ethna_AppManager
     /**
      *  あるイベントに写真を追加する
      *
+     *  @param  int     $userId     イベントを追加したユーザのID。イベントを追加したユーザと一致すれば写真を追加します
      *  @param  int     $eventId    対象とするイベントのID
-     *  @param  string  $tmp_name   サーバが一時的にアップロードしたファイルのパス
-     *  @return int                 追加した写真のID。失敗した場合は 0
+     *  @param  array   $photos     サーバが一時的にアップロードしたファイルのパスの配列
+     *  @return array               追加した写真のファイルのパスの配列。引数のファイルのパスの配列と同等です。失敗した場合は 0
      */
-    public function addEventPhoto(int $eventId, string $tmpName): int
+    public function addEventPhoto(int $userId, int $eventId, array $photos): array
     {
-        $result = $this->db->execute('INSERT INTO photos (event_id) VALUES (?)', [
+        $check = $this->db->getOne('SELECT id FROM events WHERE id = ? AND user_id = ?', [
             $eventId,
+            $userId,
         ]);
 
-        if (! $result) {
-            return 0;
+        if (! $check) {
+            return [];
         }
 
-        $insertId = $this->db->getOne('SELECT lastval()');
+        if (count($photos) === 0) {
+            return [];
+        }
 
-        move_uploaded_file($tmpName, self::UPLOAD_PATH . $insertId. '.jpg');
+        $result = $this->db->execute('INSERT INTO photos (event_id) VALUES (?)' . str_repeat(', (?)', count($photos) - 1), array_fill(0, count($photos), $eventId));
 
-        return $insertId;
+        if (! $result) {
+            return [];
+        }
+
+        $insertId = $this->db->getOne('SELECT lastval()') - count($photos);
+
+        foreach ($photos as $tmpName) {
+            $insertId++;
+            move_uploaded_file($tmpName, self::UPLOAD_PATH . $insertId. '.jpg');
+        }
+
+        return $photos;
     }
 
     /**
      *  あるイベントの写真を削除する
      *
+     *  @param  int     $userId     イベントを追加したユーザのID。イベントを追加したユーザと一致すれば写真を削除します
      *  @param  int     $eventId    対象とする写真のイベントのID
      *  @param  array   $photos     対象とする写真のIDの配列
      *  @return array               削除した写真のIDの配列。対象とする写真のIDの配列と同等です。失敗した場合は空の配列
      */
-    public function removeEventPhotos(int $eventId, array $photos): array
+    public function removeEventPhotos(int $userId, int $eventId, array $photos): array
     {
-        if(count($photos) === 0){
+        $check = $this->db->getOne('SELECT id FROM events WHERE id = ? AND user_id = ?', [
+            $eventId,
+            $userId,
+        ]);
+
+        if (! $check) {
+            return [];
+        }
+
+        if (count($photos) === 0) {
             return [];
         }
 

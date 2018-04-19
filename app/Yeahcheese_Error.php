@@ -16,3 +16,5 @@
  *  Example:
  *  define('E_LOGIN_INVALID', 256);
  */
+
+define('E_APP_INTERNAL', 256);

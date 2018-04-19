@@ -14,3 +14,5 @@
 {form_name name="password"}{form_input name="password"}
 {form_submit value="ログイン"}
 {/form}
+
+<a href="?action_user_login=true">共有者</a>

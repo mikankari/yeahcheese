@@ -17,3 +17,4 @@
 {/form}
 
 <a href="?action_user_register=true">会員登録</a>
+<a href="?action_event_login=true">閲覧者</a>
