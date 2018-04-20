@@ -1,19 +1,7 @@
 <div class="ui container">
   <h2>イベントの編集</h2>
 
-  {if count($errors) > 0}
-    <div class="ui message error">
-    {foreach from=$errors item=error name=errors}
-      {if $smarty.foreach.errors.first}
-        <ul class="ui list">
-      {/if}
-      <li>{$error}</li>
-      {if $smarty.foreach.errors.last}
-        </ul>
-      {/if}
-    {/foreach}
-    </div>
-  {/if}
+  {include file="messages.tpl"}
 
   {form ethna_action="event_edit_execute" enctype="file" name="edit" class="ui form"}
     {form_input name="event_id" default=$app.eventId}
