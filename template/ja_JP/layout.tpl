@@ -14,7 +14,7 @@
 <body>
   <div class="ui inverted menu">
     <div class="ui container">
-      <div class="header item">
+      <div class="orange active item">
         <h1 style="font-family: BrushScriptMT;">Yeahcheese!</h1>
       </div>
       {if $app.user}
@@ -30,7 +30,7 @@
   <div class="ui main">
     {$content}
   </div>
-  <div class="ui footer segment">
+  <div class="ui orange segment">
     <div class="ui center aligned container">
       <p class="">Powered By Ethnam - {$smarty.const.ETHNA_VERSION}.</p>
     </div>
