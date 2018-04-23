@@ -30,7 +30,9 @@
       {/if}
       <div class="four wide column">
         <div class="ui segment">
-          <img src="{$app.photosBaseUrl}{$item.id}.jpg" alt="投稿した写真" class="ui fluid image">
+          <a href="{$app.photosBaseUrl}{$item.id}.jpg" class="highslide">
+            <img src="{$app.photosBaseUrl}{$item.id}.jpg" alt="投稿した写真" class="ui fluid image">
+          </a>
         </div>
       </div>
       {if $smarty.foreach.photos.last}
