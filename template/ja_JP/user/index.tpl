@@ -1,6 +1,4 @@
-<h2>ようこそ</h2>
-{$app.user.email} さん
+<div class="ui container">
+  <h2 class="ui header">ようこそ</h2>
 
-<a href="?action_event_list=true">イベント一覧</a>
-<a href="?action_event_edit=true">イベント追加</a>
-<a href="?action_user_login_revoke=true">ログアウト</a>
+</div>

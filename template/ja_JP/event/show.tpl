@@ -1,15 +1,27 @@
-<h2>{$app.name}</h2>
+<div class="ui container">
+  <h2 class="ui header">{$app.name}</h2>
 
-{$app.publishStartAt} から {$app.publishEndAt} まで
+  <p>{$app.publishStartAt} から {$app.publishEndAt} まで</p>
+  {if $app.user}
+  <a href="?action_event_list=true" class="ui button">戻る</a>
+  <a href="?action_event_edit=true&event_id={$app.eventId}" class="ui black button">編集</a>
+  {else}
+  <div class="ui right aligned container">
+    <a href="?action_event_login_revoke=true" class="ui button">他のイベントを見る</a>
+  </div>
+  {/if}
 
-{foreach from=$app.photos item=item}
-    <img src="{$app.photosBaseUrl}{$item.id}.jpg" alt="投稿した写真">
-{foreachelse}
-    写真はまだありません
-{/foreach}
+  <div class="ui hidden divider"></div>
 
-{if $app.user}
-    <a href="?action_event_edit=true&event_id={$app.eventId}">編集</a>
-    <a href="?action_event_list=true">イベント一覧</a>
-{/if}
-<a href="?action_event_login_revoke=true">ログアウト</a>
+  <div class="ui grid">
+  {foreach from=$app.photos item=item name=photos}
+    <div class="four wide column">
+      <img src="{$app.photosBaseUrl}{$item.id}.jpg" alt="投稿した写真" class="ui fluid image">
+    </div>
+  {foreachelse}
+    <div class="sixteen wide column">
+      <p>写真はまだありません</p>
+    </div>
+  {/foreach}
+  </div>
+</div>

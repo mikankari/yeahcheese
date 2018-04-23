@@ -1,21 +1,38 @@
-<h2>会員登録</h2>
+<div class="ui container text">
+  <h2 class="ui header">会員登録</h2>
 
-{foreach from=$errors item=error name=errors}
-    {if $smarty.foreach.errors.first}
-        <ul>
-    {/if}
-    <li>{$error}</li>
-    {if $smarty.foreach.errors.last}
-        </ul>
-    {/if}
-{/foreach}
+  {include file="messages.tpl"}
 
-{form ethna_action="user_register_execute"}
-{form_name name="name"}{form_input name="name"}
-{form_name name="email"}{form_input name="email"}
-{form_name name="password"}{form_input name="password"}
-{form_name name="password_confirm"}{form_input name="password_confirm"}
-{form_submit value="登録"}
-{/form}
+  {form ethna_action="user_register_execute" class="ui form"}
+    <div class="field">
+      <label for="name">{form_name name="name"}</label>
+      {form_input name="name" id="name" class="form-control"}
+    </div>
+    <div class="field">
+      <label for="email">{form_name name="email"}</label>
+      {form_input name="email" id="email" class="form-control"}
+    </div>
+    <div class="field">
+      <label for="password">{form_name name="password"}</label>
+      {form_input name="password" id="password" class="form-control"}
+    </div>
+    <div class="field">
+      <label for="password_confirm">{form_name name="password_confirm"}</label>
+      {form_input name="password_confirm" id="password_confirm" class="form-control"}
+    </div>
+    {form_submit value="登録" class="ui fluid black submit button"}
+  {/form}
 
-<a href="?action_user_login=true">ログイン</a>
+  <div class="ui message">
+    <div class="ui grid">
+      <div class="eight wide column">
+        <p>認証キーをお持ちですか？</p>
+        <a href="?action_event_login=true">イベントを見る</a>
+      </div>
+      <div class="eight wide column">
+        <p>アカウントをお持ちですか？</p>
+        <a href="?action_user_login=true">ログイン</a>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,20 +1,30 @@
-<h2>ログイン</h2>
+<div class="ui container text">
+  <h2 class="ui header">ログイン</h2>
 
-{foreach from=$errors item=error name=errors}
-    {if $smarty.foreach.errors.first}
-        <ul>
-    {/if}
-    <li>{$error}</li>
-    {if $smarty.foreach.errors.last}
-        </ul>
-    {/if}
-{/foreach}
+  {include file="messages.tpl"}
 
-{form ethna_action="user_login_execute"}
-{form_name name="email"}{form_input name="email"}
-{form_name name="password"}{form_input name="password"}
-{form_submit value="ログイン"}
-{/form}
+  {form ethna_action="user_login_execute" class="ui form"}
+    <div class="field">
+      <label for="email">{form_name name="email"}</label>
+      {form_input name="email" id="email"}
+    </div>
+    <div class="field">
+      <label for="password">{form_name name="password"}</label>
+      {form_input name="password" id="password"}
+    </div>
+    {form_submit value="ログイン" class="ui fluid black button"}
+  {/form}
 
-<a href="?action_user_register=true">会員登録</a>
-<a href="?action_event_login=true">閲覧者</a>
+  <div class="ui message">
+    <div class="ui grid">
+      <div class="eight wide column">
+        <p>認証キーをお持ちですか？</p>
+        <a href="?action_event_login=true">イベントを見る</a>
+      </div>
+      <div class="eight wide column">
+        <p>はじめてのログインですか？</p>
+        <a href="?action_user_register=true">会員登録</a>
+      </div>
+    </div>
+  </div>
+</div>
