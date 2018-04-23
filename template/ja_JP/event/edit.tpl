@@ -1,6 +1,6 @@
 <div class="ui container">
   <div class="ui basic segment">
-    <h2 class="ui header">イベントの編集</h2>
+    <h2 class="ui header">イベントの{if $app.eventId}編集{else}追加{/if}</h2>
   </div>
 
   <div class="ui basic segment">
@@ -29,6 +29,7 @@
     {/form}
   </div>
 
+  {if $app.eventId}
   <div class="ui basic segment">
     {form ethna_action="event_edit_delete" name="delete" class="ui form"}
       {form_input name="event_id" default=$app.eventId action="event_edit_delete"}
@@ -56,4 +57,5 @@
       <button type="submit" class="ui orange button"><i class="icon trash"></i>削除</button>
     {/form}
   </div>
+  {/if}
 </div>
