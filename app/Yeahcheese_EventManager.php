@@ -128,6 +128,19 @@ class Yeahcheese_EventManager extends Ethna_AppManager
     }
 
     /**
+     *  公開期限のタイムスタンプをクライアントのフォームが認識できる書式に変換する
+     *
+     *  @param  string  $timestamp  DB上のタイムスタンプ
+     *  @return                     フォームが認識できる公開期限
+     **/
+    public static function formatPublishAt(string $timestamp): string
+    {
+        $parsed = new DateTime($timestamp);
+
+        return $parsed->format('Y-m-d\TH:i');
+    }
+
+    /**
      *  公開期限のタイムスタンプを表示のための書式に変換する
      *
      *  @param  int     $userId 表示を求めるユーザ。閲覧者の場合は 0

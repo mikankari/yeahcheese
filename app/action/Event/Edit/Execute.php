@@ -35,13 +35,12 @@ class Yeahcheese_Form_EventEditExecute extends Yeahcheese_ActionForm
             'type'      =>  VAR_TYPE_DATETIME,
             'name'      =>  '公開期間の開始',
             'required'  =>  true,
-            'regexp'    =>  '/^\d{4}(-\d{2}){2} \d{2}(:\d{2}){2}$/',
+            'custom'    =>  'checkValidDateTime',
         ],
         'publish_end_at' => [
             'type'      =>  VAR_TYPE_DATETIME,
             'name'      =>  '公開期間の終了',
             'required'  =>  true,
-            'regexp'    =>  '/^\d{4}(-\d{2}){2} \d{2}(:\d{2}){2}$/',
             'custom'    =>  'checkPublishEndAt',
         ],
         'photos' => [
@@ -55,12 +54,29 @@ class Yeahcheese_Form_EventEditExecute extends Yeahcheese_ActionForm
     ];
 
     /**
+     *  日時の各値が有効であるか確認する
+     *
+     *  @param  string  $name 日時のname属性値
+     */
+    public function checkValidDateTime(string $name): void
+    {
+        $parsed = new DateTime($this->form_vars[$name]);
+
+        if ($parsed->getLastErrors()['warning_count'] > 0 || $parsed->getLastErrors()['error_count'] > 0) {
+            $this->action_error->add($name, '{form} には有効な日時を入力してください', E_FORM_INVALIDVALUE);
+        }
+    }
+
+    /**
      *  終了の日時が開始の日時より後になっているか確認する
      *
      *  @param  string  $name   終了の日時のname属性値
      */
     public function checkPublishEndAt(string $name): void
     {
+        // custom 属性が複数できないため、終了の日時の各値有効はここで確認する
+        self::checkValidDateTime($name);
+
         // 開始の日時のname属性値
         $target = 'publish_start_at';
 
