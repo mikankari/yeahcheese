@@ -20,12 +20,12 @@ class Yeahcheese_Action_EventList extends Yeahcheese_ActionClass
 
         $this->action_form->setApp('events', $events);
 
-        $formatedPublishAt = [];
+        $publishAtText = [];
         foreach ($events as $item) {
-            $formatedPublishAt[$item['id']] = Yeahcheese_EventManager::formatPublishAt($this->user['id'], $item['publish_start_at'], $item['publish_end_at']);
+            $publishAtText[$item['id']] = Yeahcheese_EventManager::getPublishAtText($this->user['id'], $item['publish_start_at'], $item['publish_end_at']);
         }
 
-        $this->action_form->setAppNE('formatedPublishAt', $formatedPublishAt);
+        $this->action_form->setAppNE('publishAtText', $publishAtText);
 
         $statusLabel = [];
         foreach ($events as $item) {

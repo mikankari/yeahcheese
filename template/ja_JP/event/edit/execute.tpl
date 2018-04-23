@@ -14,7 +14,7 @@
       </tr>
       <tr>
         <th class="center aligned">公開期間</th>
-        <td>{$app_ne.formatedPublishAt}</td>
+        <td>{$app_ne.publishAtText}</td>
       </tr>
       <tr>
         <th class="center aligned">認証キー</th>

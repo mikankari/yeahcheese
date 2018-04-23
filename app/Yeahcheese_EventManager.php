@@ -135,7 +135,7 @@ class Yeahcheese_EventManager extends Ethna_AppManager
      *  @param  string  $end    公開期限の終了のタイムスタンプ
      *  @return string          表示する公開期限
      */
-    public static function formatPublishAt(int $userId, string $start, string $end): string
+    public static function getPublishAtText(int $userId, string $start, string $end): string
     {
         $format = '<\b>Y</\b> 年 <\b>n</\b> 月 <\b>j</\b> 日 <\b>D H:i</\b>';
 
