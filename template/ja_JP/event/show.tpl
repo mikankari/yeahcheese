@@ -1,6 +1,6 @@
 <div class="ui container">
   <div class="ui basic segment">
-    <h2 class="ui center aligned header">{$app.name}</h2>
+    <h2 class="ui center aligned header">{$app.name}{if $app.user}<div class="sub header">プレビュー中</div>{/if}</h2>
   </div>
 
   <div class="ui basic segment">
