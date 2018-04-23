@@ -168,17 +168,17 @@ class Yeahcheese_EventManager extends Ethna_AppManager
         $endParsed = new DateTime($end);
         $current = new DateTime();
 
-        $status = '<div class="ui horizontal label">';
+        $status = '公開終了';
+        $color = '';
         if ($startParsed > $current) {
-            $status .= '公開予定';
+            $status = '公開予定';
+            $color = ' yellow';
         } else if ($startParsed <= $current && $current <= $endParsed) {
-            $status .= '公開中';
-        } else {
-            $status .= '公開終了';
+            $status = '公開中';
+            $color = ' orange';
         }
-        $status .= '</div>';
 
-        return $status;
+        return '<div class="ui' . $color . ' label">' . $status . '</div>';
     }
 
     /**
