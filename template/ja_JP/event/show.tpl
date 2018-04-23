@@ -30,8 +30,8 @@
     {foreach from=$app.photos item=item name=photos}
       <div class="four wide column">
         <div class="ui segment">
-          <a href="{$app.photosBaseUrl}{$item.id}.jpg" class="highslide">
-            <img src="{$app.photosBaseUrl}{$item.id}.jpg" alt="投稿した写真" class="ui fluid image">
+          <a href="?action_event_photo=true&event_id={$app.eventId}&photo_id={$item.id}" class="highslide">
+            <img src="?action_event_photo=true&event_id={$app.eventId}&photo_id={$item.id}" alt="投稿した写真" class="ui fluid image">
           </a>
         </div>
       </div>
