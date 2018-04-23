@@ -21,7 +21,7 @@ class Yeahcheese_ViewClass extends Ethna_ViewClass
             return '';
         }
 
-        if (isset($def['required']) && $def['required']) {
+        if (isset($def['required']) && $def['required'] && ! is_array($def['type'])) {
             $params['required'] = '';
         }
 
@@ -29,5 +29,4 @@ class Yeahcheese_ViewClass extends Ethna_ViewClass
     }
 
 }
-// }}}
 
