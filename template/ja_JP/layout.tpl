@@ -2,13 +2,13 @@
 <html lang="ja">
 
 <head>
-  <meta charset="utf-8">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="./semantic/semantic.min.css">
+  <link rel="stylesheet" href="/yeahcheese/semantic/semantic.min.css">
   <link rel="stylesheet" href="/yeahcheese/highslide/highslide.css">
   <link rel="stylesheet" href="./css/main.css">
   <script src="//ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  <script scr="./semantic/semantic.min.js"></script>
+  <script scr="/yeahcheese/semantic/semantic.min.js"></script>
   <script src="/yeahcheese/highslide/highslide.min.js"></script>
   <script src="/yeahcheese/js/main.js"></script>
   <title>Yeahcheese!</title>

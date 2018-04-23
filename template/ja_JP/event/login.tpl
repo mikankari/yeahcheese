@@ -4,19 +4,7 @@
   </div>
 
   <div class="ui basic segment">
-    {if count($errors) > 0}
-      <div class="ui message error">
-        {foreach from=$errors item=error name=errors}
-          {if $smarty.foreach.errors.first}
-            <ul>
-          {/if}
-          <li>{$error}</li>
-          {if $smarty.foreach.errors.last}
-            </ul>
-          {/if}
-        {/foreach}
-      </div>
-    {/if}
+    {include file="messages.tpl"}
 
     {form ethna_action="event_login_execute" class="ui form"}
       <div class="field">

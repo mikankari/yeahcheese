@@ -4,10 +4,8 @@
   </div>
 
   <div class="ui basic segment">
+    <div class="ui very relaxed divided list">
     {foreach from=$app.events item=item name=events}
-      {if $smarty.foreach.events.first}
-        <div class="ui very relaxed divided list">
-      {/if}
       <div class="item">
         <div class="right floated content">
           <a href="?action_event_edit=true&event_id={$item.id}" class="ui gray button"><i class="icon edit"></i>編集</a>
@@ -26,12 +24,12 @@
           </table>
         </div>
       </div>
-      {if $smarty.foreach.events.last}
-        </div>
-      {/if}
     {foreachelse}
-      <p>イベントはまだありません</p>
+      <div class="item">
+        <p>イベントはまだありません</p>
+      </div>
     {/foreach}
+    </div>
   </div>
 
   <div class="ui basic segment">

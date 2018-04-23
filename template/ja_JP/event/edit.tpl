@@ -4,19 +4,7 @@
   </div>
 
   <div class="ui basic segment">
-    {if count($errors) > 0}
-      <div class="ui message error">
-      {foreach from=$errors item=error name=errors}
-        {if $smarty.foreach.errors.first}
-          <ul class="ui list">
-        {/if}
-        <li>{$error}</li>
-        {if $smarty.foreach.errors.last}
-          </ul>
-        {/if}
-      {/foreach}
-      </div>
-    {/if}
+    {include file="messages.tpl"}
 
     {form ethna_action="event_edit_execute" enctype="file" name="edit" class="ui form"}
       {form_input name="event_id" default=$app.eventId}
@@ -47,10 +35,8 @@
       <div class="field">
         <label for="">{form_name name="photos"}の削除</label>
       </div>
+      <div class="ui grid">
       {foreach from=$app.photos item=item name="photos"}
-        {if $smarty.foreach.photos.first}
-          <div class="ui grid">
-        {/if}
         <div class="four wide column">
           <div class="ui checkbox">
             {form_input name="photos" type="checkbox" value=$item.id id="photos-`$item.id`"}
@@ -61,12 +47,12 @@
             </label>
           </div>
         </div>
-        {if $smarty.foreach.photos.last}
-          </div>
-        {/if}
       {foreachelse}
-        <p>写真はまだありません</p>
+        <div class="sixteen wide column">
+          <p>写真はまだありません</p>
+        </div>
       {/foreach}
+      </div>
       <button type="submit" class="ui orange button"><i class="icon trash"></i>削除</button>
     {/form}
   </div>

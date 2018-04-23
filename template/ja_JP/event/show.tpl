@@ -15,19 +15,19 @@
       </tr>
     </table>
     {if $app.user}
-      <a href="?action_event_list=true" class="ui button"><i class="icon arrow left"></i>戻る</a>
-      <a href="?action_event_edit=true&event_id={$app.eventId}" class="ui orange button"><i class="icon edit"></i>編集</a>
-      <a href="#" class="ui right floated disabled button">
+    <a href="?action_event_list=true" class="ui button"><i class="icon arrow left"></i>戻る</a>
+    <a href="?action_event_edit=true&event_id={$app.eventId}" class="ui orange button"><i class="icon edit"></i>編集</a>
+    <a href="#" class="ui right floated disabled button">
     {else}
-      <a href="?action_event_login_revoke=true" class="ui right floated button">
-    {/if}<i class="icon sign out"></i>他のイベントを見る</a>
+    <a href="?action_event_login_revoke=true" class="ui right floated button">
+    {/if}
+      <i class="icon sign out"></i>他のイベントを見る
+    </a>
   </div>
 
   <div class="ui basic segment">
+    <div class="ui grid">
     {foreach from=$app.photos item=item name=photos}
-      {if $smarty.foreach.photos.first}
-        <div class="ui grid">
-      {/if}
       <div class="four wide column">
         <div class="ui segment">
           <a href="{$app.photosBaseUrl}{$item.id}.jpg" class="highslide">
@@ -35,11 +35,11 @@
           </a>
         </div>
       </div>
-      {if $smarty.foreach.photos.last}
-        </div>
-      {/if}
     {foreachelse}
-      <p>写真はまだありません</p>
+      <div class="sixteen wide column">
+        <p>写真はまだありません</p>
+      </div>
     {/foreach}
+    </div>
   </div>
 </div>
