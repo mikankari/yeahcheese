@@ -25,7 +25,7 @@
       </div>
       <div class="field">
         <label for="email">{form_name name="email"}</label>
-        {form_input name="email" id="email" class="form-control"}
+        {form_input type="email" name="email" id="email" class="form-control"}
       </div>
       <div class="field">
         <label for="password">{form_name name="password"}</label>

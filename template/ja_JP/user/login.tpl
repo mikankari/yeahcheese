@@ -21,7 +21,7 @@
     {form ethna_action="user_login_execute" class="ui form"}
       <div class="field">
         <label for="email">{form_name name="email"}</label>
-        {form_input name="email" id="email"}
+        {form_input type="email" name="email" id="email"}
       </div>
       <div class="field">
         <label for="password">{form_name name="password"}</label>

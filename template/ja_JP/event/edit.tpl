@@ -26,11 +26,11 @@
       </div>
       <div class="field">
         <label for="publish_start_at">{form_name name="publish_start_at"}</label>
-        {form_input name="publish_start_at" default=$app.publishStartAt id="publish_start_at"}
+        {form_input type="datetime-local" name="publish_start_at" default=$app.publishStartAt id="publish_start_at"}
       </div>
       <div class="field">
         <label for="publish_end_at">{form_name name="publish_end_at"}</label>
-        {form_input name="publish_end_at" default=$app.publishEndAt id="publish_end_at"}
+        {form_input type="datetime-local" name="publish_end_at" default=$app.publishEndAt id="publish_end_at"}
       </div>
       <div class="field">
         <label for="photos">{form_name name="photos"}の追加</label>
