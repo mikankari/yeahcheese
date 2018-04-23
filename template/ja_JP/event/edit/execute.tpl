@@ -29,6 +29,6 @@
   </div>
 
   <div class="ui center aligned basic segment">
-    <a href="?action_event_show=true&event_id={$app.eventId}" class="ui black button"><i class="icon arrow right"></i> イベントページへ</a>
+    <a href="?action_event_show=true&event_id={$app.eventId}" class="ui orange button"><i class="icon arrow right"></i> イベントページへ</a>
   </div>
 </div>

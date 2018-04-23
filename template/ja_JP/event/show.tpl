@@ -16,7 +16,7 @@
     </table>
     {if $app.user}
       <a href="?action_event_list=true" class="ui button"><i class="icon arrow left"></i>戻る</a>
-      <a href="?action_event_edit=true&event_id={$app.eventId}" class="ui black button"><i class="icon edit"></i>編集</a>
+      <a href="?action_event_edit=true&event_id={$app.eventId}" class="ui orange button"><i class="icon edit"></i>編集</a>
       <a href="#" class="ui right floated disabled button">
     {else}
       <a href="?action_event_login_revoke=true" class="ui right floated button">

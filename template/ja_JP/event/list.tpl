@@ -35,6 +35,6 @@
   </div>
 
   <div class="ui basic segment">
-    <a href="?action_event_edit=true" class="ui black button"><i class="icon plus"></i>追加</a>
+    <a href="?action_event_edit=true" class="ui orange button"><i class="icon plus"></i>追加</a>
   </div>
 </div>

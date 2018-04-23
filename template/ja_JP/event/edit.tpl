@@ -37,7 +37,7 @@
          {form_input name="photos" id="photos"}
       </div>
       <a href="?action_event_{if $app.eventId}show=true&event_id={$app.eventId}{else}list=true{/if}" class="ui button"><i class="icon arrow left"></i>戻る</a>
-      <button type="submit" class="ui black button"><i class="icon save"></i>送信</button>
+      <button type="submit" class="ui orange button"><i class="icon save"></i>送信</button>
     {/form}
   </div>
 
@@ -67,7 +67,7 @@
       {foreachelse}
         <p>写真はまだありません</p>
       {/foreach}
-      <button type="submit" class="ui black button"><i class="icon trash"></i>削除</button>
+      <button type="submit" class="ui orange button"><i class="icon trash"></i>削除</button>
     {/form}
   </div>
 </div>

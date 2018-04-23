@@ -27,7 +27,7 @@
         <label for="password">{form_name name="password"}</label>
         {form_input name="password" id="password"}
       </div>
-      <button type="submit" class="ui fluid black button"><i class="icon sign in"></i>ログイン</button>
+      <button type="submit" class="ui fluid orange button"><i class="icon sign in"></i>ログイン</button>
     {/form}
   </div>
 
