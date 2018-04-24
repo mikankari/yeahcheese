@@ -14,15 +14,15 @@
       </div>
       <div class="field">
         <label for="publish_start_at">{form_name name="publish_start_at"}</label>
-        {form_input type="datetime-local" name="publish_start_at" default=$app.publishStartAt id="publish_start_at"}
+        {form_input type="datetime-local" name="publish_start_at" default=$app.publishStartAt|date_format:"%Y-%m-%dT%H:%M"|default:$smarty.now|date_format:"%Y-%m-%dT00:00" id="publish_start_at"}
       </div>
       <div class="field">
         <label for="publish_end_at">{form_name name="publish_end_at"}</label>
-        {form_input type="datetime-local" name="publish_end_at" default=$app.publishEndAt id="publish_end_at"}
+        {form_input type="datetime-local" name="publish_end_at" default=$app.publishEndAt|date_format:"%Y-%m-%dT%H:%M"|default:$smarty.now|date_format:"%Y-%m-%dT00:00" id="publish_end_at"}
       </div>
       <div class="field">
         <label for="photos">{form_name name="photos"}の追加</label>
-         {form_input name="photos" id="photos"}
+         {form_input name="photos" id="photos" accept="image/jpeg"}
       </div>
       <a href="?action_event_{if $app.eventId}show=true&event_id={$app.eventId}{else}list=true{/if}" class="ui button"><i class="icon arrow left"></i>戻る</a>
       <button type="submit" class="ui orange button"><i class="icon save"></i>送信</button>

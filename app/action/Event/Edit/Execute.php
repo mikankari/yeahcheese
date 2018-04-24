@@ -60,7 +60,12 @@ class Yeahcheese_Form_EventEditExecute extends Yeahcheese_ActionForm
      */
     public function checkValidDateTime(string $name): void
     {
-        $parsed = new DateTime($this->form_vars[$name]);
+        try {
+            $parsed = new DateTime($this->form_vars[$name]);
+        } catch(Exception $exception) {
+            $this->action_error->add($name, '{form} には有効な日時を入力してください', E_FORM_INVALIDVALUE);
+            return;
+        }
 
         if ($parsed->getLastErrors()['warning_count'] > 0 || $parsed->getLastErrors()['error_count'] > 0) {
             $this->action_error->add($name, '{form} には有効な日時を入力してください', E_FORM_INVALIDVALUE);
@@ -79,6 +84,10 @@ class Yeahcheese_Form_EventEditExecute extends Yeahcheese_ActionForm
 
         // 開始の日時のname属性値
         $target = 'publish_start_at';
+
+        if ($this->action_error->isError($target) || $this->action_error->isError($name)) {
+            return;
+        }
 
         $start = new DateTime($this->form_vars[$target]);
         $end = new DateTime($this->form_vars[$name]);
