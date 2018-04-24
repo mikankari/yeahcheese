@@ -18,7 +18,7 @@
   <div class="ui inverted menu">
     <div class="ui container">
       <a href="/yeahcheese/" class="orange active item">
-        <h1 style="font-family: BrushScriptMT;">Yeahcheese!</h1>
+        <h1 class="title">Yeahcheese!</h1>
       </a>
       {if $app.user}
       <a href="?action_event_list=true" class="item"><i class="icon list"></i>イベント一覧</a>
