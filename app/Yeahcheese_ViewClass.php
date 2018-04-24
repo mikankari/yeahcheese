@@ -34,6 +34,10 @@ class Yeahcheese_ViewClass extends Ethna_ViewClass
             $params['required'] = '';
         }
 
+        if (is_array($def['type']) && in_array(VAR_TYPE_FILE, $def['type'])) {
+            $params['multiple'] = '';
+        }
+
         return parent::getFormInput($name, $action, $params);
     }
 }
