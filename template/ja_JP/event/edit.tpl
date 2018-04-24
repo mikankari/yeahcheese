@@ -22,7 +22,7 @@
       </div>
       <div class="field">
         <label for="photos">{form_name name="photos"}の追加</label>
-         {form_input name="photos" id="photos"}
+         {form_input name="photos" id="photos" accept="image/jpeg"}
       </div>
       <a href="?action_event_{if $app.eventId}show=true&event_id={$app.eventId}{else}list=true{/if}" class="ui button"><i class="icon arrow left"></i>戻る</a>
       <button type="submit" class="ui orange button"><i class="icon save"></i>送信</button>
