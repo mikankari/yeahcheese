@@ -15,7 +15,7 @@
           <table class="description ui very basic table">
               <tr>
                   <th>公開期限</th>
-                  <td>{$app_ne.publishAtText[$item.id]} {$app_ne.statusLabel[$item.id]}</td>
+                  <td>{include file="publishat.tpl" publishStartAt=$item.publish_start_at publishEndAt=$item.publish_end_at} {include file="publishlabel.tpl" publishStartAt=$item.publish_start_at publishEndAt=$item.publish_end_at}</td>
               </tr>
               <tr>
                   <th>枚数</th>

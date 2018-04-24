@@ -7,7 +7,7 @@
     <table class="ui very basic collapsing table">
       <tr>
         <th>公開期限</th>
-        <td>{$app_ne.publishAtText}</td>
+        <td>{include file="publishat.tpl" publishEndAt=$app.publishEndAt}</td>
       </tr>
       <tr>
         <th>枚数</th>
