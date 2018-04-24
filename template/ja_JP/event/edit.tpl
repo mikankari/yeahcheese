@@ -43,7 +43,7 @@
             {form_input name="photos" type="checkbox" value=$item.id id="photos-`$item.id`"}
             <label for="photos-{$item.id}">
               <div class="ui segment">
-                <img src="{$app.photosBaseUrl}{$item.id}.jpg" alt="投稿した写真" class="ui fluid image">
+                <img src="?action_event_photo=true&event_id={$app.eventId}&photo_id={$item.id}" alt="投稿した写真" class="ui fluid image">
               </div>
             </label>
           </div>

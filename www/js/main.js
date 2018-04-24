@@ -1,7 +1,10 @@
 (function() {
   $(function() {
-    return $('.highslide').on('click', function(event) {
+    $('.highslide').on('click', function(event) {
       return hs.expand(event.currentTarget);
+    });
+    return $(document).on('contextmenu', 'img', function(event) {
+      return false;
     });
   });
 

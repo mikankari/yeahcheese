@@ -28,6 +28,27 @@ class Yeahcheese_PhotoManager extends Ethna_AppManager
     }
 
     /**
+     *  あるイベントのある写真のファイルパスを取得する
+     *
+     *  @param  int $eventId    イベントのID。写真を追加したイベントと一致すれば取得します
+     *  @param  int $photoId    対象とする写真のID
+     *  @return string          写真のファイルパス
+     **/
+    public function getPhotoPath(int $eventId, int $photoId): string
+    {
+        $photo = $this->db->getRow('SELECT id FROM photos WHERE id = ? AND event_id = ?', [
+            $photoId,
+            $eventId,
+        ]);
+
+        if (! $photo) {
+            return '';
+        }
+
+        return realpath(self::UPLOAD_PATH . $photoId . '.jpg');
+    }
+
+    /**
      *  あるイベントに写真を追加する
      *
      *  @param  int     $userId     イベントを追加したユーザのID。イベントを追加したユーザと一致すれば写真を追加します
