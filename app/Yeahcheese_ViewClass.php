@@ -7,40 +7,37 @@
  *  @package    Yeahcheese
  */
 
-// {{{ Yeahcheese_ViewClass
-/**
- *  View class.
- *
- *  @author     {$author}
- *  @package    Yeahcheese
- *  @access     public
- */
 class Yeahcheese_ViewClass extends Ethna_ViewClass
 {
-    /**#@+
-     *  @access protected
-     */
-
-    /** @var  string  set layout template file   */
-    protected $_layout_file = 'layout';
-
-    /**#@+
-     *  @access public
-     */
-
-    /** @var boolean  layout template use flag   */
-    public $use_layout = true;
-
     /**
-     *  set common default value.
+     *  > 指定されたフォーム項目に対応するフォームタグを取得する
+     *  オーバーライドによって、HTML の required 属性に対応させる
      *
-     *  @access protected
-     *  @param  object  Yeahcheese_Renderer  Renderer object.
+     *  @param  string  name    フォーム項目名
+     *  @param  string  action  フォーム項目が定義されているアクション
+     *  @param  array   param   テンプレートでの属性値一覧
+     *  @return string          フォームタグ
      */
-    protected function _setDefault($renderer)
+    public function getFormInput($name, $action, $params)
     {
+        $af = $this->_getHelperActionForm($action, $name);
+        if ($af === null) {
+            return '';
+        }
+
+        $def = $af->getDef($name);
+        if ($def === null) {
+            return '';
+        }
+
+        if (isset($def['required']) && $def['required'] && ! is_array($def['type'])) {
+            $params['required'] = '';
+        }
+
+        if (is_array($def['type']) && in_array(VAR_TYPE_FILE, $def['type'])) {
+            $params['multiple'] = '';
+        }
+
+        return parent::getFormInput($name, $action, $params);
     }
-
 }
-// }}}
-

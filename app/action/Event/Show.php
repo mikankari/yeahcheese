@@ -54,6 +54,7 @@ class Yeahcheese_Action_EventShow extends Yeahcheese_ActionClass
         $photos = $photoManager->getEventPhotos($this->eventId);
 
         $this->action_form->setApp('photos', $photos);
+        $this->action_form->setApp('photosCount', count($photos));
         $this->action_form->setApp('photosBaseUrl', Yeahcheese_PhotoManager::UPLOAD_URL);
 
         return 'event_show';

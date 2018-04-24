@@ -1,0 +1,15 @@
+.highslide img {
+  border: 0;
+}
+
+.title {
+  font-family: "Brush Script MT";
+}
+
+.largeNumOnly {
+  display: inline-block;
+}
+.largeNumOnly b {
+  font-weight: normal;
+  font-size: 1.214em;
+}
